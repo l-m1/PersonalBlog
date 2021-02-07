@@ -26,45 +26,50 @@ instance.interceptors.response.use(response => {
   return Promise.reject(error);
 });
 
-class Api {
-  constructor() {}
-  static do(method,url,data) {
-    const headers = {
-      Accept: 'application/json',
-            Prgama: 'no-cache',
-            'Cache-Control' : 'no-cache',
+class Api{
+	constructor() {
+	}
+	static do(method, url, data) {
+		const headers={
+			Accept: 'application/json',
+            Pragma: 'no-cache',
+           'Cache-Control': 'no-cache',
             Expires: 0,
-            'Content-Type' : 'application/json;charset=utf-8'
-    }
-    return new Promise((resolve,reject) => {
-      instance({
-        method,
-        url,
-        params:data,
-        headers:headers
-      }).then(res => {
-        if(res.ok) {
-          resolve(res);
-        } else if(res.code === 10002) {
-          //登录状态失效
-          reject(new Error(`token失效`));
-        } else {
-          if(res.code) {
-            router.currentRoute.path !== 'login' && 
-            router.replace({
-              path: 'login',
-              query: { redirect:router.currentRoute.path},
-            })
-            reject(new Error(`${res.code}: ${res.msg}`));
-          }
-        }
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  }
+           'Content-Type': 'application/json; charset=utf-8'
+		}
+		return new Promise((resolve, reject) => {
+			instance({
+				method,
+				url,
+				params: data,
+				headers:headers
+			}).then(res=>{
+				// resolve(res);
+				if (res.data.ok) {
+					resolve(res.data);
+				} else if (res.data.code === 1002) {
+					//登录状态失效
+					reject(new Error(`token失效`));
+				} else {
+					if( res.data.code ){
+						router.currentRoute.path !== 'login' &&
+						router.replace({
+						  path: 'login',
+						  query: { redirect: router.currentRoute.path },
+						})
+						reject(new Error(`${res.data.code}: ${res.data.msg}`));
+					}
+					else{
+						reject(new Error(`${res.data.msg}`));
+					}
+				}
+			}).catch(err=>{
+				reject(err)
+			})
+		})
+	}
 }
 export function GET({api,data}){return Api.do('get',api,data)}
-export function PUT({api,data}){return Api.do('put',api,data)}
-export function DELETE({api,data}){return Api.do('delete',api,data)}
-export function POST({api,data}){return Api.do('post',api,data)}
+export function PUT({api,data,}){return Api.do('put',api,data,)}
+export function DELETE({api,data,}){return Api.do('delete',api,data,)}
+export function POST({api,data,}){return Api.do('post',api,data,)}
