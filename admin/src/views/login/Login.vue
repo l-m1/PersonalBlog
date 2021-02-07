@@ -17,7 +17,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login" class="login">登录</el-button>
+          <el-button type="primary" @click="submit" class="login">登录</el-button>
           <div class="bottom">
             <el-button type="info" @click="switchModel(1)">注册</el-button>
             <el-button type="info" @click="switchModel(2)">忘记密码</el-button>
@@ -30,7 +30,10 @@
 <script>
 /* 邮箱正则 */
 import RegExp from "utils/RegExp.js";
-import Storage from "utils/storage.js"
+import Storage from "utils/storage.js";
+/* 网络请求 */
+import {login} from 'server/userApi.js';
+
 export default {
   name: 'Login',
   data() {
@@ -51,19 +54,16 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$refs.loginform.validate(async valid => {
-        if(!valid) return;
+    async submit() {
         this.$message.success('登陆成功');
-        const {data:res} = await this.$api.login(this.loginForm);
+        let res = await login({data:{name: "薛顺顺",psd: "123456"}})
         if(res.id === 0) {
-        //将token保存
-        Storage.setStorage('token',res.token);
-        //跳转路由
-        this.$router.push('/detail');
+          console.log(res);
+          //将token保存
+          Storage.setStorage('token',res.token);
+          //跳转路由
+          this.$router.push('/detail');
         }
-        console.log(res);
-      })
     },
     //下方按钮选择 跳转至注册 or 忘记密码
     switchModel(event) {

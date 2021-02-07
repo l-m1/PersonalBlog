@@ -1,9 +1,10 @@
 import Axios from 'axios';
 import Storage from 'utils/storage.js';
-import router from 'router/index.js'
+import router from 'router/index.js';
+import qs from 'qs';
 
 const instance = Axios.create({
-  baseURL: process.env.VUE_APP_URL === 'development' ? 'http://127.0.0.1:3001' : 'http://127.0.0.1:3000',
+  baseURL: process.env.VUE_APP_URL === 'development' ? 'http://127.0.0.1:3000' : 'http://127.0.0.1:3001',
   timeout: 3000
 });
 
@@ -33,7 +34,7 @@ class Api {
             Prgama: 'no-cache',
             'Cache-Control' : 'no-cache',
             Expires: 0,
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json;charset=utf-8'
     }
     return new Promise((resolve,reject) => {
       instance({
@@ -42,22 +43,19 @@ class Api {
         params:data,
         headers:headers
       }).then(res => {
-        if(res.data.ok) {
-          resolve(res.data);
-        } else if(res.data.code === 10002) {
+        if(res.ok) {
+          resolve(res);
+        } else if(res.code === 10002) {
           //登录状态失效
           reject(new Error(`token失效`));
         } else {
-          if(res.data.code) {
+          if(res.code) {
             router.currentRoute.path !== 'login' && 
             router.replace({
               path: 'login',
               query: { redirect:router.currentRoute.path},
             })
-            reject(new Error(`${res.data.code}: ${res.data.msg}`));
-          }
-          else {
-            reject(new Error(`${res.data.msg}`));
+            reject(new Error(`${res.code}: ${res.msg}`));
           }
         }
       }).catch(err => {
