@@ -6,18 +6,18 @@
         <span>忘记密码</span>
       </div>
       <!-- 找回密码区域 -->
-      <el-form ref="loginform" class="loginform" :model="loginform" :rules="loginRules">
-        <!-- 邮箱账号 -->
-        <el-form-item prop="emailcode">
-          <el-input v-model="loginform.emailcode" prefix-icon="iconfont iconyouxiang"></el-input>
+      <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
+        <!-- 用户名 -->
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" prefix-icon="iconfont iconusername"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input v-model="loginform.password" prefix-icon="iconfont iconpass" type="password"></el-input>
+          <el-input v-model="loginForm.password" prefix-icon="iconfont iconpass" type="password"></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
         <el-form-item prop="emailvcode" class="vcode">
-          <el-input v-model="loginform.emailvcode" prefix-icon="iconfont iconyanzhengma"></el-input>
+          <el-input v-model="loginForm.emailvcode" prefix-icon="iconfont iconyanzhengma"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -39,14 +39,14 @@ export default {
   name: 'Forget',
   data() {
     return {
-      loginform: {
-        emailcode: '',
-        emailvcode: '',
-        password: ''
+      loginForm: {
+        username: '',
+        password: '',
+        emailvcode: ''
       },
       /* 找回密码规则 */
       loginRules: {
-        emailcode: [
+        username: [
           { required: true,message: "请输入邮箱账号",trigger: "blur"}
         ],
         password: [
@@ -61,8 +61,8 @@ export default {
   methods: {
     async relogin() {
       //点击登录按钮
-      //1、邮箱\密码 不符合规范
-      if(!RegExp.emailRight.test(this.loginform.emailcode) | !RegExp.regPassWord.test(this.loginform.password)) {
+      //1、用户名\密码 不符合规范
+      if(!RegExp.usernameRight.test(this.loginform.emailcode) | !RegExp.regPassWord.test(this.loginform.password)) {
         this.$message({
           message: '请确认您输入的邮箱、密码是否正确',
           type: 'warning'

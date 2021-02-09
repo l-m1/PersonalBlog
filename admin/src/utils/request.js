@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import Storage from 'utils/storage.js';
 import router from 'router/index.js';
-import qs from 'qs';
 
 const instance = Axios.create({
   baseURL: process.env.VUE_APP_URL === 'development' ? 'http://127.0.0.1:3000' : 'http://127.0.0.1:3001',
@@ -31,6 +30,7 @@ class Api{
 	}
 	static do(method, url, data) {
 		const headers={
+			Authorization:`Bearer ${window.sessionStorage.getItem('token')}`,
 			Accept: 'application/json',
             Pragma: 'no-cache',
            'Cache-Control': 'no-cache',
@@ -41,28 +41,11 @@ class Api{
 			instance({
 				method,
 				url,
-				params: data,
+				data,
 				headers:headers
 			}).then(res=>{
-				// resolve(res);
-				if (res.data.ok) {
-					resolve(res.data);
-				} else if (res.data.code === 1002) {
-					//登录状态失效
-					reject(new Error(`token失效`));
-				} else {
-					if( res.data.code ){
-						router.currentRoute.path !== 'login' &&
-						router.replace({
-						  path: 'login',
-						  query: { redirect: router.currentRoute.path },
-						})
-						reject(new Error(`${res.data.code}: ${res.data.msg}`));
-					}
-					else{
-						reject(new Error(`${res.data.msg}`));
-					}
-				}
+        //console.log(res);
+        resolve(res)
 			}).catch(err=>{
 				reject(err)
 			})

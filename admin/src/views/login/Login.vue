@@ -9,7 +9,7 @@
       <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
         <!-- 邮箱号 -->
         <el-form-item prop="name">
-          <el-input v-model="loginForm.name" prefix-icon="iconfont iconyouxiang"></el-input>
+          <el-input v-model="loginForm.name" prefix-icon="iconfont iconusername"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="psd">
@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       loginForm: {
-        name: "薛顺顺",
-        psd: "123456"
+        name: "lm",
+        psd: "54321"
       },
       /* 登录规则 */
       loginRules: {
@@ -55,14 +55,15 @@ export default {
   },
   methods: {
     async submit() {
-        this.$message.success('登陆成功');
-        let res = await login({data:{name: "薛顺顺",psd: "123456"}})
-        if(res.id === 0) {
-          console.log(res);
+        let res = await login({data:{name: this.loginForm.name,psd: this.loginForm.psd}})
+        if(res.data.id >= 0) {
+          //console.log(res);
           //将token保存
-          Storage.setStorage('token',res.token);
+          window.sessionStorage.setItem('token',res.data.token);
           //跳转路由
-          this.$router.push('/detail');
+          this.$router.push('/home');
+        }else {
+        this.$message.error('请确认您的密码是否正确');
         }
     },
     //下方按钮选择 跳转至注册 or 忘记密码

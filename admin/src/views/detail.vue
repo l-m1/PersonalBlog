@@ -1,11 +1,5 @@
 <template>
-  <div>hello</div>
+  <div>
+    <h2>Welcome</h2>
+  </div>
 </template>
-<script>
-export default {
-  name: 'Detail'
-}
-</script>
-<style scoped>
-
-</style>

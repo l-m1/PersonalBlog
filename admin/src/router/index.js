@@ -8,7 +8,10 @@ const Register = () => import('views/register/Register.vue')
 const Forget = () => import('views/forget/Forget.vue')
 
 const Home = () => import('views/home/Home.vue')
-const Detail = () => import('views/detail.vue')
+const AllArticles = () => import('views/home/homechildren/AllArticles.vue')
+const CreateArticle = () => import('views/home/homechildren/CreateArticle.vue')
+const PersonalArticle = () => import('views/home/homechildren/PersonalArticle.vue')
+const Detail = () => import('views/Detail.vue')
 
 const routes = [
   {
@@ -29,11 +32,26 @@ const routes = [
   },
   {
     path: '/home',
-    component:Home
-  },
-  {
-    path: '/detail',
-    component:Detail
+    component:Home,
+    redirect: '/personalarticle',
+    children:[
+      {
+        path: '/personalarticle',
+        component:PersonalArticle
+      },
+      {
+        path: '/createarticle',
+        component:CreateArticle
+      },
+      {
+        path: '/allarticles',
+        component:AllArticles
+      },
+      {
+        path: '/detail',
+        component:Detail
+      }
+    ]
   }
 ]
 

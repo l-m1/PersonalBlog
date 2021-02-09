@@ -6,25 +6,25 @@
         <span>注册</span>
       </div>
       <!-- 找回密码区域 -->
-      <el-form ref="loginform" class="loginform" :model="loginform" :rules="loginRules">
-        <!-- 邮箱账号 -->
-        <el-form-item prop="emailcode">
-          <el-input v-model="loginform.emailcode" prefix-icon="iconfont iconyouxiang"></el-input>
+      <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
+        <!-- 用户名 -->
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" prefix-icon="iconfont iconyouxiang"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input v-model="loginform.password" prefix-icon="iconfont iconpass" type="password"></el-input>
+          <el-input v-model="loginForm.password" prefix-icon="iconfont iconpass" type="password"></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
-        <el-form-item prop="emailvcode" class="vcode">
-          <el-input v-model="loginform.emailvcode" prefix-icon="iconfont iconyanzhengma"></el-input>
+        <el-form-item prop="vcode" class="vcode">
+          <el-input v-model="loginForm.vcode" prefix-icon="iconfont iconyanzhengma"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary" class="login">找回密码</el-button>
           <div class="bottom">
             <el-button type="info" @click="switchModel(1)">登录</el-button>
-            <el-button type="info" @click="switchModel(2)">注册</el-button>
+            <el-button type="info" @click="switchModel(2)">忘记密码</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -39,23 +39,23 @@ export default {
   name: 'Register',
   data() {
     return {
-      loginform: {
-        emailcode: '',
-        emailvcode: '',
-        password: ''
+      loginForm: {
+        username: '',
+        password: '',
+        vcode: ''
       },
       /* 找回密码规则 */
       loginRules: {
-        emailcode: [
-          { required: true,message: "邮箱账号",trigger: "blur"},
+        username: [
+          { required: true,message: "用户名",trigger: "blur"},
           { min: 6,max: 18,message: "长度在 6 到 18 个字符",trigger: "blur"}
         ],
         password: [
-          { required: true,message: "登录密码",trigger: "blur"},
+          { required: true,message: "密码",trigger: "blur"},
           { min: 6,max: 12,message: "长度在 6 到 12 个字符",trigger: "blur"}
         ],
-        emailvcode: [
-          { required: true,message: "邮箱验证码",trigger: "blur"},
+        vcode: [
+          { required: true,message: "验证码",trigger: "blur"},
           { min: 6,max: 6,message: "长度在 6 个字符",trigger: "blur"}
         ]
       },
@@ -69,7 +69,7 @@ export default {
           this.$router.push('/login')
           break;
         case 2:
-          this.$router.push('/register')
+          this.$router.push('/forget')
           break;
       }
     },
@@ -83,7 +83,7 @@ export default {
   }
   .login_box {
     width: 450px;
-    height: 350px;
+    height: 400px;
     background-color: #fff;
     border-radius: 3px;
     /* 外部白色盒子居中 */
@@ -100,6 +100,7 @@ export default {
   }
   .login_box .loginform {
     position: absolute;
+    bottom: 30px;
     width: 100%;
     padding: 0 15px;
     box-sizing: border-box;
