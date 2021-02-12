@@ -9,7 +9,6 @@ const Forget = () => import('views/forget/Forget.vue')
 
 const Home = () => import('views/home/Home.vue')
 const AllArticles = () => import('views/home/homechildren/AllArticles.vue')
-const CreateArticle = () => import('views/home/homechildren/CreateArticle.vue')
 const PersonalArticle = () => import('views/home/homechildren/PersonalArticle.vue')
 const Detail = () => import('views/Detail.vue')
 
@@ -38,10 +37,6 @@ const routes = [
       {
         path: '/personalarticle',
         component:PersonalArticle
-      },
-      {
-        path: '/createarticle',
-        component:CreateArticle
       },
       {
         path: '/allarticles',

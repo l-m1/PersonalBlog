@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import {getAllArticle,deleteArticle} from 'server/userApi.js';
+import {getAllArticle,deleteArticles} from 'server/userApi.js';
 import Storage from 'utils/storage.js';
 export default {
   created() {
@@ -45,7 +45,7 @@ export default {
     async getArticles() {
         let res = await getAllArticle({data:{type:""}})
         this.length = res.data.length
-        console.log(res);
+        //console.log(res);
         for(var i=0;i<this.length;i++) {
           this.Article.title = res.data[i].title
           this.Article.des = res.data[i].des
@@ -53,11 +53,12 @@ export default {
         }
     },
     async deleteItem(currentindex) {
-      let res = await deleteArticle({data: {id:""}})
+      let res = await deleteArticles({data: {id:""}})
       //console.log(res);
       for(var i=0;i<res.data.length;i++) {
         this.currentindex = res.data[i].id
       }
+      console.log(this.currentindex);
       Storage.removeStorage(currentindex);
       this.getArticles()
     }

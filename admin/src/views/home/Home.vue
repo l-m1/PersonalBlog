@@ -31,10 +31,6 @@
             </el-menu-item>
             <el-menu-item index="2" @click="btnClick02">
               <i class="el-icon-menu"></i>
-              <span slot="title">新建文章</span>
-            </el-menu-item>
-            <el-menu-item index="3" @click="btnClick03">
-              <i class="el-icon-menu"></i>
               <span slot="title">全部文章</span>
             </el-menu-item>
           </el-menu>
@@ -48,7 +44,6 @@
 </template>
 <script>
 import PersonalArticle from './homechildren/PersonalArticle.vue'
-import CreateArticle from './homechildren/CreateArticle.vue'
 import AllArticles from './homechildren/AllArticles.vue'
 
 export default {
@@ -65,7 +60,6 @@ export default {
   },
   components: {
     PersonalArticle,
-    CreateArticle,
     AllArticles
   },
   methods: {
@@ -83,9 +77,6 @@ export default {
       this.$router.push('./personalarticle')
     },
     btnClick02() {
-      this.$router.push('./createarticle')
-    },
-    btnClick03() {
       this.$router.push('./allarticles')
     }
   }
