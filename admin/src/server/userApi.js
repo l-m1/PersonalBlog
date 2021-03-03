@@ -1,24 +1,51 @@
-import {GET,PUT,DELETE,POST} from 'utils/request.js';
+import {request} from 'utils/request.js'
 
 export function login({data}) {
-  return POST({api: '/api/login',data})
+  return request({
+      url: '/api/login',
+      method: 'post',
+      data
+  })
 }
-export function oneArticle({data}) {
-  return GET({api: '/api/article',data})
+export function oneArticle({params}) {
+  return request({
+      url: '/api/article',
+      method: 'get',
+      params
+  })
 }
-export function personalArticle({data}) {
-  return GET({api: '/api/user/article',data})
+export function personalArticle({params}) {
+  return request({
+      url: '/api/user/article',
+      method: 'get',
+      params
+  })
 }
 export function updateArticles({data}) {
-  return PUT({api: '/api/article',data})
+  return request({
+      url: '/api/article',
+      method: 'put',
+      data
+  })
 }
 export function createArticles({data}) {
-  return POST({api: '/api/article',data})
+  return request({
+      url: '/api/article',
+      method: 'post',
+      data
+  })
 }
 export function deleteArticles({data}) {
-  return DELETE({api: '/api/article',data})
+  return request({
+      url: '/api/article',
+      method: 'delete',
+      data
+  })
 }
-export function getAllArticle({data}) {
-  return GET({api: '/api/article',data})
+export function getAllArticle({params}) {
+  return request({
+      url: '/api/article',
+      method: 'get',
+      params
+  })
 }
-

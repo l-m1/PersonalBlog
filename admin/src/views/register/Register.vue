@@ -5,11 +5,11 @@
       <div class="avatar_box">
         <span>注册</span>
       </div>
-      <!-- 找回密码区域 -->
+      <!-- 注册区域 -->
       <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="iconfont iconyouxiang"></el-input>
+          <el-input v-model="loginForm.username" prefix-icon="iconfont iconusername"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
@@ -78,7 +78,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .login_container {
-    background-color: #2b4b6b;
+    background-color: #f5f7fa;
     height: 100vh;
   }
   .login_box {

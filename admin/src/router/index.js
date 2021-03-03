@@ -8,9 +8,24 @@ const Register = () => import('views/register/Register.vue')
 const Forget = () => import('views/forget/Forget.vue')
 
 const Home = () => import('views/home/Home.vue')
+const Hello = () => import('views/hello/Hello.vue')
 const AllArticles = () => import('views/home/homechildren/AllArticles.vue')
-const PersonalArticle = () => import('views/home/homechildren/PersonalArticle.vue')
-const Detail = () => import('views/Detail.vue')
+const Read = () => import('views/home/homechildren/Read.vue')
+//二级菜单 
+const HTML = () => import('components/content/admin/Html.vue')
+const CSS = () => import('components/content/admin/Css.vue')
+const JS = () => import('components/content/admin/Js.vue')
+const VueJs = () => import('components/content/admin/VueJs.vue')
+const React = () => import('components/content/admin/React.vue')
+const Java = () => import('components/content/server/Java.vue')
+const MySql = () => import('components/content/server/MySql.vue')
+const SuanFa = () => import('components/content/server/SuanFa.vue')
+const DataBase = () => import('components/content/zhineng/DataBase.vue')
+const Git = () => import('components/content/utils/Git.vue')
+const Vscode = () => import('components/content/utils/Vscode.vue')
+const People = () => import('components/content/code/People.vue')
+const MianShi = () => import('components/content/code/MianShi.vue')
+const Other = () => import('components/content/other/Other')
 
 const routes = [
   {
@@ -30,21 +45,77 @@ const routes = [
     component:Forget
   },
   {
+    path: '/hello',
+    component:Hello
+  },
+  {
     path: '/home',
     component:Home,
-    redirect: '/personalarticle',
+    redirect: '/read',
     children:[
-      {
-        path: '/personalarticle',
-        component:PersonalArticle
-      },
       {
         path: '/allarticles',
         component:AllArticles
       },
       {
-        path: '/detail',
-        component:Detail
+        path: '/read',
+        component:Read
+      },
+      {
+        path: '/html',
+        component:HTML
+      },
+      {
+        path: '/css',
+        component:CSS
+      },
+      {
+        path: '/js',
+        component:JS
+      },
+      {
+        path: '/vuejs',
+        component:VueJs
+      },
+      {
+        path: '/react',
+        component:React
+      },
+      {
+        path: '/java',
+        component:Java
+      },
+      {
+        path: '/mysql',
+        component:MySql
+      },
+      {
+        path: '/suanfa',
+        component:SuanFa
+      },
+      {
+        path: '/database',
+        component:DataBase
+      },
+      {
+        path: '/git',
+        component:Git
+      },
+      {
+        path: '/vscode',
+        component:Vscode
+      },
+      {
+        path: '/people',
+        component:People
+      },
+      {
+        path: '/mianshi',
+        component:MianShi
+      },
+      {
+        path: '/other',
+        component:Other
       }
     ]
   }

@@ -7,7 +7,7 @@
       </div>
       <!-- 登录区域 -->
       <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
-        <!-- 邮箱号 -->
+        <!-- 用户名 -->
         <el-form-item prop="name">
           <el-input v-model="loginForm.name" prefix-icon="iconfont iconusername"></el-input>
         </el-form-item>
@@ -56,14 +56,15 @@ export default {
   methods: {
     async submit() {
         let res = await login({data:{name: this.loginForm.name,psd: this.loginForm.psd}})
-        if(res.data.id >= 0) {
+        //console.log(res);
+        if(res.id >= 0) {
           //console.log(res);
           //将token保存
-          window.sessionStorage.setItem('token',res.data.token);
+          window.sessionStorage.setItem('token',res.token);
           //跳转路由
-          this.$router.push('/home');
+          this.$router.push('/hello');
         }else {
-        this.$message.error('请确认您的密码是否正确');
+        this.$message.error('请确认您的用户名、密码是否正确');
         }
     },
     //下方按钮选择 跳转至注册 or 忘记密码
@@ -82,7 +83,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .login_container {
-    background-color: #2b4b6b;
+    background-color: #f5f7fa;
     height: 100vh;
   }
   .login_box {

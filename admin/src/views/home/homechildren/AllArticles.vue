@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async getArticles() {
-        let res = await getAllArticle({data:{type:""}})
+        let res = await getAllArticle({params:{}})
         this.length = res.data.length
         //console.log(res);
         for(var i=0;i<this.length;i++) {
