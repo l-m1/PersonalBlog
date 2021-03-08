@@ -95,7 +95,7 @@ export default {
         }, {
           label: 'git'
         }, {
-          label: 'peopele'
+          label: 'people'
         }, {
           label: 'mianshi'
         },{

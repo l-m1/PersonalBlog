@@ -15,9 +15,13 @@
         <el-table-column prop="updata_at" label="更新时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
+            <!-- 查看按钮 -->
+            <el-tooltip effect="dark" content="查看" placement="top" :enterabl="false">
+              <el-button type="info" icon="iconfont iconchakan" @click="articleLook(scope.row.id)"></el-button>
+            </el-tooltip>
             <!-- 编辑按钮 -->
             <el-tooltip effect="dark" content="编辑" placement="top" :enterabl="false">
-              <el-button type="primary" icon="iconfont iconbianji"  @click="articleLook(scope.row.id)"></el-button>
+              <el-button type="primary" icon="iconfont iconbianji"  @click="articleEdit(scope.row.id)"></el-button>
             </el-tooltip>
             <!-- 删除按钮 -->
             <el-tooltip effect="dark" content="删除" placement="top" :enterabl="false">
@@ -46,7 +50,7 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="addContent.title"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="des">
+        <el-form-item label="内容" prop="des">
           <div class="describe">
             <textarea
              name="text" 
@@ -63,6 +67,25 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
+    <!--  查看文章对话框-->
+    <el-dialog
+      title="查看文章内容"
+      :visible.sync="lookDialogVisible"
+      width="50%">
+      <el-form ref="lookContentRef" :model="editContent" label-width="80px">
+          <div class="describe">
+            <textarea
+             name="text" 
+             class="content" 
+             rows="20" cols="90"
+             wrap="physical" 
+             v-model="editContent.des"></textarea>
+            </div>
+      </el-form>
+      <span slot="footer">
+        <el-button @click="lookDialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
     <!-- 修改文章的对话框 -->
     <el-dialog
       title="修改文章"
@@ -76,7 +99,14 @@
           <el-input v-model="editContent.title"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <el-input v-model="editContent.des"></el-input>
+          <div class="describe">
+            <textarea
+             name="text" 
+             class="content" 
+             rows="20" cols="80"
+             wrap="physical" 
+             v-model="editContent.des"></textarea>
+            </div>
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -104,6 +134,7 @@ export default {
       /* 添加对话框的显示与隐藏 */
       addDialogVisible: false,
       editDialogVisible: false,
+      lookDialogVisible:false,
       /* 全部文章 */
       type : "React",
       /* 新建文章内容 */
@@ -113,7 +144,6 @@ export default {
       },
       /* 更新文章 */
       editContent: {
-        id: ''
       },
     }
   },
@@ -130,14 +160,19 @@ export default {
     submit() {
       this.createArticle()
     },
-    /* 查看文章内容 更新*/
+    /* 查看文章内容 */
     articleLook(id) {
-      this.updateArticle(id)
+      this.lookArticle(id)
+      this.lookDialogVisible = true
+    },
+    /* 编辑文章 */
+    articleEdit(id) {
+      this.lookArticle(id)
       this.editDialogVisible = true
     },
-    /* 修改文章 确定成功修改 */
+    /* 编辑文章 确定修改 */
     confirm() {
-      //this.updateArticle()
+      this.updateArticle()
     },
     /* 根据id 删除文章 */
     async articleDelete(id) {
@@ -177,15 +212,14 @@ export default {
       /* 提示信息 */
       return this.$message.success('添加文章成功')
     },
-    /* 获取单个文章 编辑*/
+    /* 查看单个文章内容 */
     async lookArticle(id) {
-      let res = await oneArticle({params: {id: 1}})
-      console.log(res);
+      let res = await oneArticle({params: {id: id,type:this.type}})
+      //console.log(res);
+      this.editContent = res
     },
     /* 更新文章 提交*/
     async updateArticle() {
-      this.$refs.editContentRef.validate(async valid => {
-        if(!valid) return
         let res = await updateArticles({data: {id:this.editContent.id,title:this.editContent.title,des:this.editContent.des}})
         /* 关闭对话框 */
         this.editDialogVisible = false
@@ -193,7 +227,6 @@ export default {
         this.getAllArticles()
         /* 提示信息 */
         return this.$message.success('更新文章成功')
-      })
     },
     /* 删除文章 */
     async deleteArticle(id) {

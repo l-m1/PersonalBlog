@@ -126,17 +126,27 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-//添加导航守卫/钩子函数
-// router.beforeEach((to,from,next) => {
-//   //如果访问的是登录页
-//   if(to.path === '/login') return next()
-//   //保存登陆后的token值
-//   const tokenStr = window.sessionStorage.getItem('token')
-//   //没有token则强制跳转到登录页
-//   if(!tokenStr) return next('/login')
-//   //存在tokenStr
-//   next()
-// })
+//通过vue-router提供的钩子函数beforeEach()
+router.beforeEach((to, from, next) => {
+  if (to.meta.login) {
+    next(true) //false时候阻止路由执行，默认是true
+    // next('/login') 在这里判断到后去跳到登录页面，先要在路由里配置
+    console.log("当前是个404组件，需要登录访问，其实你还没有登录，不过看你可怜兮兮，我暂时让你旁观！")
+  } else {
+    next()
+  }
+})
+
+// //afterEach进入组件之后，当然，就没有next了，已经进入了组件
+router.afterEach((to, from) => {
+  if (to.meta.title) {
+    //当进入了组件后，如果meta里有title就设置title(注意，这个位置document前面需要加上window才能访问)
+    window.document.title = to.meta.title;
+    console.log(from)
+  } else {
+      window.document.title = 'Blog'
+    }
+})
 
 //导出
 export default router

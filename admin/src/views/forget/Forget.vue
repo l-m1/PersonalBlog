@@ -3,25 +3,26 @@
     <div class="login_box">
       <!-- 头部区域 -->
       <div class="avatar_box">
-        <span>忘记密码</span>
+        <span>重置密码</span>
       </div>
       <!-- 找回密码区域 -->
       <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
         <!-- 邮箱号 -->
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="iconfont iconyouxiang"></el-input>
+        <el-form-item prop="codename">
+          <el-input v-model="loginForm.codename" prefix-icon="iconfont iconyouxiang"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" prefix-icon="iconfont iconpass" type="password"></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
-        <el-form-item prop="emailvcode" class="vcode">
-          <el-input v-model="loginForm.emailvcode" prefix-icon="iconfont iconyanzhengma"></el-input>
+        <el-form-item prop="vcode" class="code">
+          <el-input v-model="loginForm.vcode" prefix-icon="iconfont iconyanzhengma" class="vcode"></el-input>
+          <el-button @click="send" class="vcode-button">获取邮箱验证码</el-button>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="relogin" class="login">找回密码</el-button>
+          <el-button type="primary" @click="rePassword" class="login">重置密码</el-button>
           <div class="bottom">
             <el-button type="info" @click="switchModel(1)">登录</el-button>
             <el-button type="info" @click="switchModel(2)">注册</el-button>
@@ -34,19 +35,21 @@
 <script>
 /* 邮箱正则 */
 import RegExp from "utils/RegExp.js";
+/* 网络请求 */
+import {repassword,getVcode} from 'server/userApi.js';
 
 export default {
   name: 'Forget',
   data() {
     return {
       loginForm: {
-        username: '',
+        codename: '',
         password: '',
-        emailvcode: ''
+        vcode: ''
       },
       /* 找回密码规则 */
       loginRules: {
-        username: [
+        codename: [
           { required: true,message: "请输入邮箱账号",trigger: "blur"}
         ],
         password: [
@@ -59,27 +62,39 @@ export default {
     }
   },
   methods: {
-    async relogin() {
-      //点击登录按钮
-      //1、用户名\密码 不符合规范
-      if(!RegExp.usernameRight.test(this.loginform.emailcode) | !RegExp.regPassWord.test(this.loginform.password)) {
+    async rePassword() {
+      //点击注册按钮
+      //1、邮箱\密码 不符合规范
+      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
         this.$message({
           message: '请确认您输入的邮箱、密码是否正确',
           type: 'warning'
         })
         return;
+      } else if (!RegExp.regName.test(this.loginForm.vcode)){
+        this.$message({
+          message: '请确认您输入的验证码是否正确',
+          type: 'warning'
+        })
+        return;
       } else {
-          //符合规范的 邮箱与密码对应
-          //登录成功 保存登录信息
-          //let userInfo = await this.$api.post('login',this.loginform)
-          const {data:res} = await this.$api.post('login',this.loginForm);
-          if(res.meta.status !== 200) return this.$message.error('登录失败');
+          //密码重置请求
+          let res = await repassword({data:{name: this.loginForm.codename,psd: this.loginForm.password,code:this.loginForm.vcode}})
           //console.log(res);
-          //将token保存
-          window.sessionStorage.setItem('token',res.data.token);
-          //跳转路由
-          this.$router.push('/home');
+          this.$message({
+            message: '重置密码成功',
+            type: 'success'
+          })
       }
+    },
+    async send() {
+    //获取验证码
+    let res = await getVcode({params:{email:this.loginForm.codename}})
+    //console.log(res);
+    this.$message({
+        message: '发送验证码成功',
+        type: 'success'
+    })
     },
     //下方按钮选择 跳转至注册 or 忘记密码
     switchModel(event) {
@@ -112,6 +127,7 @@ export default {
     transform: translate(-50%,-50%);
     .avatar_box {
       font-size: 30px;
+      margin: 20px 0;
       font-weight: 550;
       color: #333333;
       text-align: center;
@@ -125,6 +141,10 @@ export default {
   }
   .vcode {
     width: 250px;
+  }
+  .vcode-button {
+    margin-left: 20px;
+    background-color: #99cccc;
   }
   .btns .login{
     width: 100%;

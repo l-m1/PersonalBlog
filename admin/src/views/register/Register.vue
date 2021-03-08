@@ -7,24 +7,25 @@
       </div>
       <!-- 注册区域 -->
       <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
-        <!-- 用户名 -->
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="iconfont iconusername"></el-input>
+        <!-- 邮箱号 -->
+        <el-form-item prop="codename">
+          <el-input v-model="loginForm.codename" prefix-icon="iconfont iconyouxiang"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" prefix-icon="iconfont iconpass" type="password"></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
-        <el-form-item prop="vcode" class="vcode">
-          <el-input v-model="loginForm.vcode" prefix-icon="iconfont iconyanzhengma"></el-input>
+        <el-form-item prop="vcode" class="code">
+          <el-input v-model="loginForm.vcode" prefix-icon="iconfont iconyanzhengma" class="vcode"></el-input>
+          <el-button @click="send" class="vcode-button">获取邮箱验证码</el-button>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" class="login">找回密码</el-button>
+          <el-button type="primary" @click="submit" class="login">注册</el-button>
           <div class="bottom">
             <el-button type="info" @click="switchModel(1)">登录</el-button>
-            <el-button type="info" @click="switchModel(2)">忘记密码</el-button>
+            <el-button type="info" @click="switchModel(2)">重置密码</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -34,20 +35,22 @@
 <script>
 /* 邮箱正则 */
 import RegExp from "utils/RegExp.js";
+/* 网络请求 */
+import {register,getVcode} from 'server/userApi.js';
 
 export default {
   name: 'Register',
   data() {
     return {
       loginForm: {
-        username: '',
+        codename: '',
         password: '',
         vcode: ''
       },
       /* 找回密码规则 */
       loginRules: {
-        username: [
-          { required: true,message: "用户名",trigger: "blur"},
+        codename: [
+          { required: true,message: "邮箱账号",trigger: "blur"},
           { min: 6,max: 18,message: "长度在 6 到 18 个字符",trigger: "blur"}
         ],
         password: [
@@ -62,6 +65,44 @@ export default {
     }
   },
   methods: {
+    async submit() {
+      //点击注册按钮
+      //1、邮箱\密码 不符合规范
+      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
+        this.$message({
+          message: '请确认您输入的邮箱、密码是否正确',
+          type: 'warning'
+        })
+        return;
+      } else if (!RegExp.regName.test(this.loginForm.vcode)){
+        this.$message({
+          message: '请确认您输入的验证码是否正确',
+          type: 'warning'
+        })
+        return;
+      } else {
+          //符合规范的 发送注册请求
+          let res = await register({data:{name: this.loginForm.codename,psd: this.loginForm.password,code:this.loginForm.vcode}})
+          //console.log(res);
+          if(res === undefined) {
+            this.$message({
+            message: '该邮箱已被注册',
+            type: 'warning'
+          })
+            return;
+          }else {
+            this.$message({
+              message: '注册成功',
+              type: 'success'
+            })
+          }
+      }
+    },
+    async send() {
+      //获取验证码
+      let res = await getVcode({params:{email:this.loginForm.codename}})
+      //console.log(res);
+    },
     //下方按钮选择 跳转至注册 or 忘记密码
     switchModel(event) {
       switch (event) {
@@ -93,6 +134,7 @@ export default {
     transform: translate(-50%,-50%);
     .avatar_box {
       font-size: 30px;
+      margin: 10px 0;
       font-weight: 550;
       color: #333333;
       text-align: center;
@@ -107,6 +149,10 @@ export default {
   }
   .vcode {
     width: 250px;
+  }
+  .vcode-button {
+    margin-left: 20px;
+    background-color: #99cccc;
   }
   .btns .login{
     width: 100%;
