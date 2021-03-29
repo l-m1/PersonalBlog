@@ -1,17 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './action'
-import getters from './getters'
 
+import Storage from "utils/storage.js";
 Vue.use(Vuex)
+//导入文件
+import getters from './getters.js'
+import mutations from './mutations.js'
+import actions from './actions.js'
 
 const state = {
+  cartList:[],
+  userinfo:'',
+  time:''
 }
-
-export default new Vuex.Store({
-	state,
-	getters,
-	actions,
-	mutations,
+//创建store对象
+const store = new Vuex.Store({
+  state,
+  mutations,
+  actions,
+  getters
 })
+
+//导出store
+export default store

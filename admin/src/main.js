@@ -1,18 +1,29 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
-import ElementUI , { Message } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import router from './router/index.js';
+import store from './store';
+import ElementUI, { Message } from 'element-ui';; //ui组件库
+import 'element-ui/lib/theme-chalk/index.css'; //同上个一起使用
+import dayjs from 'dayjs';  //时间选择器
+import './utils/moment.js';
 
-import './assets/css/global.css'
-import './assets/css/fonts/iconfont.css'
-import './assets/css/base.css'
-import './assets/css/normalize.css'
+//css区域
+import './assets/css/fonts/iconfont.css';
+import './assets/css/base.css';
+//markdown
+import 'mavon-editor/dist/css/index.css'
+//富文本
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 
 Vue.use(ElementUI)
 Vue.prototype.$message = Message
+Vue.prototype.dayjs = dayjs;
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
+

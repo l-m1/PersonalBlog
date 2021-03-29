@@ -8,24 +8,25 @@ const Register = () => import('views/register/Register.vue')
 const Forget = () => import('views/forget/Forget.vue')
 
 const Home = () => import('views/home/Home.vue')
-const Hello = () => import('views/hello/Hello.vue')
-const AllArticles = () => import('views/home/homechildren/AllArticles.vue')
-const Read = () => import('views/home/homechildren/Read.vue')
-//二级菜单 
-const HTML = () => import('components/content/admin/Html.vue')
-const CSS = () => import('components/content/admin/Css.vue')
-const JS = () => import('components/content/admin/Js.vue')
-const VueJs = () => import('components/content/admin/VueJs.vue')
-const React = () => import('components/content/admin/React.vue')
-const Java = () => import('components/content/server/Java.vue')
-const MySql = () => import('components/content/server/MySql.vue')
-const SuanFa = () => import('components/content/server/SuanFa.vue')
-const DataBase = () => import('components/content/zhineng/DataBase.vue')
-const Git = () => import('components/content/utils/Git.vue')
-const Vscode = () => import('components/content/utils/Vscode.vue')
-const People = () => import('components/content/code/People.vue')
-const MianShi = () => import('components/content/code/MianShi.vue')
-const Other = () => import('components/content/other/Other')
+const Host = () => import('views/host/Host.vue')
+const Current = () => import('views/search/Current.vue')
+const About = () => import('views/about/About.vue')
+
+//发现页管理
+const itemFirst = () => import('views/search/currentchild/itemFirst.vue')
+const itemSecond = () => import('views/search/currentchild/itemSecond.vue')
+const itemThree = () => import('views/search/currentchild/itemThree.vue')
+const itemFour = () => import('views/search/currentchild/itemFour.vue')
+const itemFive = () => import('views/search/currentchild/itemFive.vue')
+const itemSix = () => import('views/search/currentchild/itemSix.vue')
+const itemSeven = () => import('views/search/currentchild/itemSeven.vue')
+const itemEight = () => import('views/search/currentchild/itemEight.vue')
+
+
+const First = () => import('components/content/personalarticle/First.vue')
+const Detail = () => import('components/content/personalarticle/Detail.vue')
+const Add = () => import('components/content/personalarticle/Add.vue')
+const Edit = () => import('components/content/personalarticle/Edit.vue')
 
 const routes = [
   {
@@ -45,79 +46,68 @@ const routes = [
     component:Forget
   },
   {
-    path: '/hello',
-    component:Hello
-  },
-  {
     path: '/home',
     component:Home,
-    redirect: '/read',
-    children:[
-      {
-        path: '/allarticles',
-        component:AllArticles
-      },
-      {
-        path: '/read',
-        component:Read
-      },
-      {
-        path: '/html',
-        component:HTML
-      },
-      {
-        path: '/css',
-        component:CSS
-      },
-      {
-        path: '/js',
-        component:JS
-      },
-      {
-        path: '/vuejs',
-        component:VueJs
-      },
-      {
-        path: '/react',
-        component:React
-      },
-      {
-        path: '/java',
-        component:Java
-      },
-      {
-        path: '/mysql',
-        component:MySql
-      },
-      {
-        path: '/suanfa',
-        component:SuanFa
-      },
-      {
-        path: '/database',
-        component:DataBase
-      },
-      {
-        path: '/git',
-        component:Git
-      },
-      {
-        path: '/vscode',
-        component:Vscode
-      },
-      {
-        path: '/people',
-        component:People
-      },
-      {
-        path: '/mianshi',
-        component:MianShi
-      },
-      {
-        path: '/other',
-        component:Other
-      }
-    ]
+  },
+  {
+    path: '/host',
+    component:Host,
+  },
+  {
+    path: '/current',
+    component:Current
+  },
+  {
+    path: '/about',
+    component:About,
+  },
+  {
+    path:'/search/itemFirst',
+    component:itemFirst
+  },
+  {
+    path:'/search/itemSecond',
+    component:itemSecond
+  },
+  {
+    path:'/search/itemThree',
+    component:itemThree
+  },
+  {
+    path:'/search/itemFour',
+    component:itemFour
+  },
+  {
+    path:'/search/itemFive',
+    component:itemFive
+  },
+  {
+    path:'/search/itemSix',
+    component:itemSix
+  },
+  {
+    path:'/search/itemSeven',
+    component:itemSeven
+  },
+  {
+    path:'/search/itemEight',
+    component:itemEight
+  },
+  {
+    path:'/first',
+    component:First
+  },
+  {
+    path:'/detail',
+    component:Detail
+  },
+  {
+    path:'/add',
+    component:Add
+  },
+  {
+    path:'/edit',
+    component:Edit
   }
 ]
 
@@ -129,9 +119,7 @@ const router = new VueRouter({
 //通过vue-router提供的钩子函数beforeEach()
 router.beforeEach((to, from, next) => {
   if (to.meta.login) {
-    next(true) //false时候阻止路由执行，默认是true
-    // next('/login') 在这里判断到后去跳到登录页面，先要在路由里配置
-    console.log("当前是个404组件，需要登录访问，其实你还没有登录，不过看你可怜兮兮，我暂时让你旁观！")
+    window.sessionStorage.removeItem('token')
   } else {
     next()
   }
