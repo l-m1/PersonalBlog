@@ -1,37 +1,20 @@
 <template>
   <div class="content-container">
     <header class="content-header">
-      <el-link icon="el-icon-edit">
-        <router-link
-            :to="{ path: '/add'}"
-            >
-              新建
-            </router-link>
-      </el-link>
       <el-button type="primary" size="mini" @click="backFirst" class="back-button"
       >返回</el-button>
     </header>
     <!--展示博客-->
-    <div v-for="(blog, index) in blogs" :key="'blogs'+index">
+    <div v-for="(blog, index) in message" :key="'message'+index">
       <div class="block">
         <el-card class="content">
-          <h4>
-            <router-link
-            :to="{ path: '/detail', query: { id: blog.id ,type:blog.type} }"
-            >
-              {{ blog.title }}
-            </router-link>
-          </h4>
+          <h4>{{ blog.title }}</h4>
           <br />
           <p>{{ blog.des }}</p>
           <br />
           <div class="me-article-footer">
-            <span class="me-article-author">
-              <i class="el-icon-user-solid"></i>&nbsp;{{ blog.user_info.name }}
-            </span>
             <span class="me-pull-right me-article-count">
-              <i class="el-icon-price-tag"></i>&nbsp;{{ blog.type }}
-              <i class="el-icon-time"></i>&nbsp;{{ blog.updata_at }}
+              <i class="el-icon-time"></i>&nbsp;{{ blog.updata_at.slice(0,10) }}
               <el-link icon="el-icon-delete">
                 <div @click="Articledelete(blog.id)"><h5>删除</h5></div>
           </el-link>
@@ -43,26 +26,35 @@
     </div>
   </div>
 </template>
-
 <script>
+import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
 //工具类
 import Storage from 'utils/storage.js';
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+
 export default {
-  name: "Types",
-  mounted() {
-    this.lookArticle()
+  name:'CollectArticles',
+  created() {
+    this.message = this.$store.getters.cartList
+    //console.log(this.message);
+
   },
   data() {
     return {
       blogs: {},
       user_info:{},
+      message:'',
+
     };
+  },
+  computed: {
+    cartLength() {
+      return this.$store.getters.cartLength
+    }
   },
   methods: {
     //获取全部分类
     async lookArticle() {
-      let res = await personalArticle({params: {}})
+      let res = await getAllArticle({params: {}})
       this.blogs = res
       //console.log(res);
     },
@@ -98,7 +90,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .content-container {
   margin-top: 30px;
@@ -137,11 +128,6 @@ export default {
   padding-left: 8px;
   font-size: 13px;
 }
-.content p {
-  width: 300px;
-  height: 15px;
-  overflow: hidden;
-}
 .me-pull-right {
   float: right;
 }
@@ -154,4 +140,3 @@ export default {
   margin-left: 20px;
 }
 </style>
-

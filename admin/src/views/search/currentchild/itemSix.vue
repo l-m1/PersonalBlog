@@ -5,7 +5,7 @@
       <div class="content" v-html="detail.des"></div>
       <el-button @click="back">返回</el-button>
       <div class="date">
-        日期: {{detail.updata_at}}
+        发表时间: {{detail.updata_at}}
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
   methods: {
     //返回前一张页面
     back() {
-      this.$router.push('/search')
+      this.$router.push('/current')
     },
     async lookArticle() {
       let res = await oneArticle({params: {id: 83,type:"书籍"}})

@@ -9,6 +9,8 @@
         <p>hi，一个喜欢记录东西的陌生人，希望通过这个博客结识更多志同道合的朋友。</p>
         <h3>我创建的文章</h3>
         <a href="javascript:;" @click="lookArticles" class="look-article">查看</a>
+        <h3>我收藏的文章</h3>
+        <a href="javascript:;" @click="lookCollectArticles" class="look-article">查看</a>
         <h3>联系方式</h3>
         <p>邮箱：{{email}}</p>
         <p>扫描下方的二维码，加我为朋友吧</p>
@@ -48,13 +50,18 @@ export default {
     }
   },
   methods:{
+    //个人创建的文章
     lookArticles() {
       this.$router.push('/first')
     },
-    //获取全部分类
+    //收藏的文章
+    lookCollectArticles() {
+      this.$router.push('/collectArticles')
+    },
+    //获取创建的文章
     async lookArticle() {
       let res = await personalArticle({params: {}})
-      console.log(res);
+      //console.log(res);
       if(res.length) {
         if(res[0].user_info.id != 2) {
         this.imgSrc_qr_code = require('assets/image/QRcode1.jpg')

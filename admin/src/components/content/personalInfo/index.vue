@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="userinfo">
     <hr>
     <div class="right_tags"> 
       <h5>FEATURED TAGS</h5>

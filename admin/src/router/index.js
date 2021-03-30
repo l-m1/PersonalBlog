@@ -22,11 +22,14 @@ const itemSix = () => import('views/search/currentchild/itemSix.vue')
 const itemSeven = () => import('views/search/currentchild/itemSeven.vue')
 const itemEight = () => import('views/search/currentchild/itemEight.vue')
 
-
 const First = () => import('components/content/personalarticle/First.vue')
 const Detail = () => import('components/content/personalarticle/Detail.vue')
 const Add = () => import('components/content/personalarticle/Add.vue')
 const Edit = () => import('components/content/personalarticle/Edit.vue')
+
+const CollectArticles = () => import('components/content/collectarticles/CollectArticles.vue')
+
+const ArticleDetail = () => import('views/home/homechild/ArticleDetail.vue')
 
 const routes = [
   {
@@ -62,35 +65,35 @@ const routes = [
     component:About,
   },
   {
-    path:'/search/itemFirst',
+    path:'/current/itemFirst',
     component:itemFirst
   },
   {
-    path:'/search/itemSecond',
+    path:'/current/itemSecond',
     component:itemSecond
   },
   {
-    path:'/search/itemThree',
+    path:'/current/itemThree',
     component:itemThree
   },
   {
-    path:'/search/itemFour',
+    path:'/current/itemFour',
     component:itemFour
   },
   {
-    path:'/search/itemFive',
+    path:'/current/itemFive',
     component:itemFive
   },
   {
-    path:'/search/itemSix',
+    path:'/current/itemSix',
     component:itemSix
   },
   {
-    path:'/search/itemSeven',
+    path:'/current/itemSeven',
     component:itemSeven
   },
   {
-    path:'/search/itemEight',
+    path:'/current/itemEight',
     component:itemEight
   },
   {
@@ -108,6 +111,14 @@ const routes = [
   {
     path:'/edit',
     component:Edit
+  },
+  {
+    path:'/articledetail',
+    component:ArticleDetail
+  },
+  {
+    path:'/collectArticles',
+    component:CollectArticles
   }
 ]
 

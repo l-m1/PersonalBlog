@@ -9,15 +9,15 @@
             <p>社会</p>
             <h4>公立大学注定不公平</h4>
             <ul>
-              <li><a href="/search/itemFirst">高校学生难就业问题</a></li>
-              <li><a href="/search/itemSecond">广告集团招生计划是“炒作”还是“宣传”</a></li>
+              <li><a href="/current/itemFirst">高校学生难就业问题</a></li>
+              <li><a href="/current/itemSecond">广告集团招生计划是“炒作”还是“宣传”</a></li>
             </ul>
           </div>
           <p>观点</p>
           <h4>擅长公关的金正恩是一个好产品经理？</h4>
           <ul>
-            <li><a href="/search/itemThree">30+的女性好找工作吗？</a></li>
-            <li><a href="/search/itemFour">春节如何面对亲戚安排的“相亲”</a></li>
+            <li><a href="/current/itemThree">30+的女性好找工作吗？</a></li>
+            <li><a href="/current/itemFour">春节如何面对亲戚安排的“相亲”</a></li>
           </ul>
           </div>
         <div>
@@ -27,15 +27,15 @@
           <p>健康</p>
           <h4>养胃技巧</h4>
           <ul>
-            <li><a href="/search/itemFive">早饭是必要吃的？</a></li>
-            <li><a href="/search/itemSix">早上十件事，让你少生病</a></li>
+            <li><a href="/current/itemFive">早饭是必要吃的？</a></li>
+            <li><a href="/current/itemSix">早上十件事，让你少生病</a></li>
           </ul>
         </div>
         <p>食疗养生</p>
         <h4>吃生姜的益处</h4>
         <ul>
-          <li><a href="/search/itemSeven">哪种豆类营养最强</a></li>
-          <li><a href="/search/itemEight">香肠肉松包</a></li>
+          <li><a href="/current/itemSeven">哪种豆类营养最强</a></li>
+          <li><a href="/current/itemEight">香肠肉松包</a></li>
         </ul>
         </div>
         </div>
@@ -48,7 +48,7 @@
 <script>
 import personalInfo from "components/content/personalInfo/index.vue";
 export default {
-  name:'SearchChild',
+  name:'CurrentChild',
   components:{
     personalInfo
   },
