@@ -117,7 +117,7 @@ const routes = [
     component:ArticleDetail
   },
   {
-    path:'/collectArticles',
+    path:'/about/collectArticles',
     component:CollectArticles
   }
 ]

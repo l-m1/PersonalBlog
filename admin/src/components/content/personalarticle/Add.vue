@@ -27,12 +27,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item label="内容" prop="des">
           <mavon-editor
+          class="me-editor"
+          ref="md"
           :disabled="!isEdit"
           v-model="ruleForm.des"
-          placeholder="请输入"></mavon-editor>
+          placeholder="请输入"
+          >
+          </mavon-editor>
         </el-form-item>
 
         <el-form-item>
@@ -96,7 +99,7 @@ export default {
         }, {
           label: '工具'
         }, {
-          label: '智能'
+          label: '闲谈'
         }, {
           label: 'code'
         }],
@@ -105,6 +108,7 @@ export default {
         title: "",
         des: "",
         type: "",
+        img:'',
       },
       rules: {
         title: [
@@ -130,7 +134,7 @@ export default {
         if (valid) {
           this.saveLoading = false;
           let res = createArticles({data:{title:this.ruleForm.title,type:this.ruleForm.type,des:this.ruleForm.des}})
-          console.log(res)
+          //console.log(res)
           //if(res.data === '参数错误!') return this.$message.error('添加文章失败')
           /* 提示信息 */
           return this.$message.success('添加文章成功')
@@ -140,6 +144,28 @@ export default {
           return false;
         }
       });
+    },
+    //添加图片事件
+    imgAdd(pos,$file) {
+      let formdata = new Formdata();
+      formdata.append('image',$file);
+      upload(formdata).then(data => {
+        if(data.code == 0) {
+          this.$refs.md.$img2Url(pos,data.data.url);
+        }else {
+          this.$message({
+            message:data.msg,
+            type:'error',
+            showClose:true
+          });
+        }
+      }).catch(err => {
+        this.$message({
+          message:err,
+          type:'error',
+          showClose:true
+        });
+      })
     },
     //返回
     backFirst() {
@@ -153,5 +179,10 @@ export default {
 .m-content {
   margin: 0 auto;
   text-align: center;
+}
+.me-editor {
+  z-index: 6 !important;
+  width: 100%;
+  height: 100%;
 }
 </style>

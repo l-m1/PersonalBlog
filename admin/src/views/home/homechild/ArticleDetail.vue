@@ -42,7 +42,7 @@ export default {
     //获取对应项单个文章内容
     async getArticle() {
       let res = await oneArticle({params: {id: this.$route.query.id,type:''}})
-      console.log(res);
+      //console.log(res);
       this.articles.title = res.title
       this.articles.des = res.des
       this.articles.create_at = res.create_at.slice(0,10)

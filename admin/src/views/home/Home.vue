@@ -25,7 +25,7 @@
               </div>
               <div class="item-box-buttons">
                 <a class="item-box_like" @click="addToCart(item.id)">
-                  <i size="middle" class="iconfont iconaixin" title="点击收藏"></i>
+                  <i size="middle" class="iconfont iconshoucang" title="点击收藏"></i>
                 </a>
               </div>
               <div class="look-down" >
@@ -306,9 +306,6 @@ h3 {
   padding: 5px 5px;
   float: left;
   margin:5px 5px;
-}
-a {
-  cursor: pointer;
 }
 .right_about{
   width: 220px;

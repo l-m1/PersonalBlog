@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "20718324",
+      "name": "用户(1)",
+      "font_class": "yonghu1",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "20718325",
+      "name": "收藏",
+      "font_class": "shoucang",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "20718305",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "20697066",
+      "name": "五角星(1)",
+      "font_class": "wujiaoxing1",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "20697067",
+      "name": "五角星",
+      "font_class": "wujiaoxing",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
       "icon_id": "20695736",
       "name": "内容",
       "font_class": "neirong",

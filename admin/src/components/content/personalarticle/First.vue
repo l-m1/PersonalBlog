@@ -139,7 +139,7 @@ export default {
 }
 .content p {
   width: 300px;
-  height: 15px;
+  height: 20px;
   overflow: hidden;
 }
 .me-pull-right {

@@ -56,7 +56,7 @@ export default {
     },
     //收藏的文章
     lookCollectArticles() {
-      this.$router.push('/collectArticles')
+      this.$router.push('/about/collectArticles')
     },
     //获取创建的文章
     async lookArticle() {
