@@ -13,6 +13,9 @@
           <p>{{ blog.des }}</p>
           <br />
           <div class="me-article-footer">
+            <span class="me-article-author">
+              <i class="el-icon-user-solid"></i>&nbsp;{{ blog.userinfo}}
+            </span>
             <span class="me-pull-right me-article-count">
               <i class="el-icon-time"></i>&nbsp;{{ blog.updata_at.slice(0,10) }}
               <el-link icon="el-icon-delete">
@@ -27,7 +30,7 @@
   </div>
 </template>
 <script>
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+import {deleteArticles} from 'server/personalApi.js'
 //工具类
 import Storage from 'utils/storage.js';
 
@@ -35,8 +38,6 @@ export default {
   name:'CollectArticles',
   created() {
     this.message = this.$store.getters.cartList
-    //console.log(this.message);
-
   },
   data() {
     return {

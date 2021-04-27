@@ -23,7 +23,7 @@
               <div class="post-info">
                 <h2 class="post-title">
                   <router-link
-                  :to="{ path: '/detail', query: { id: item.id ,type:item.type} }"
+                  :to="{ name: 'detailarticle', params: { id: item.id ,type:item.type} }"
                   >
                     {{ item.title }}
                   </router-link>
@@ -59,7 +59,7 @@
 <script>
 import headerBackground from "components/content/headerBackground/index.vue";
 //网络请求
-import {getAllArticle,oneArticle} from 'server/userApi.js'
+import {getAllArticle} from 'server/hostApi.js'
 
 export default {
   name:'Host',
@@ -177,7 +177,7 @@ export default {
     text-align: left;
     padding-bottom: 10px;
     font-size: 18px;
-    line-height: 15px;
+    line-height: 20px;
     font-style: normal;
     text-overflow: ellipsis;
     display: -webkit-box;

@@ -42,11 +42,11 @@
 
 <script>
 import {mavonEditor} from 'mavon-editor';
-import {oneArticle,updateArticles} from 'server/userApi.js'
+import {oneArticle,updateArticles} from 'server/personalApi.js'
 export default {
   name: "BlogEdit",
   created() {
-    this.getArticle()
+    this.getArticle();
   },
   components: {
     mavonEditor
@@ -118,7 +118,7 @@ export default {
   methods: {
     //获取对应项单个文章内容
     async getArticle() {
-      let res = await oneArticle({params: {id: this.$route.query.id,type:this.$route.query.type}})
+      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
       this.ruleForm = res
     },
     //编辑
@@ -140,8 +140,7 @@ export default {
     },
     //返回
     backDeatil() {
-      //this.$router.push('/first')
-      this.$router.push({path:'/detail',query:{id:this.$route.query.id,type:this.$route.query.type}})
+      this.$router.push({name:'detail',params:{id:this.$route.params.id,type:this.$route.params.type}})
     }
   },
 };

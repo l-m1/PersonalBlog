@@ -27,7 +27,7 @@
 </template>
 <script>
 /* 网络请求 */
-import {personalArticle} from 'server/userApi.js';
+import {personalArticle} from 'server/personalApi.js';
 
 export default {
   created() {

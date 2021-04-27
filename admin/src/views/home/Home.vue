@@ -30,7 +30,7 @@
               </div>
               <div class="look-down" >
                 <a>
-                  <router-link :to="{ path: '/articledetail', query: { id: item.id} }">
+                  <router-link :to="{ name: 'articledetail', params: { id: item.id} }">
                     <a class="btn-preview">
                       <i size="middle" class="iconfont iconneirong">
                     查看具体内容</i>
@@ -54,7 +54,7 @@
 import headerBackground from "components/content/headerBackground/index.vue";
 import personalInfo from "components/content/personalInfo/index.vue";
 //网络请求
-import {getAllArticle,oneArticle} from 'server/userApi.js'
+import {getAllArticle,oneArticle} from 'server/homeApi.js'
 //导入收藏成功弹窗
 import Toast from 'components/common/toast/Toast.vue'
 
@@ -102,6 +102,7 @@ export default {
       product.title = res.title;
       product.des = res.des;
       product.updata_at = res.updata_at;
+      product.userinfo = res.user_info.name
       product.id = res.id;
       //2、将报名成功的添加到个人管理里
       this.$store.dispatch('addCart',product)

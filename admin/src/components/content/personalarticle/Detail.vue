@@ -5,11 +5,13 @@
         <div class="m-blog">
           <p class="m-header-title">{{ blog.title }}</p>
           <el-link icon="el-icon-edit" v-if="ownBlog">
-            <router-link
-            :to="{ path: '/edit', query: { id: blog.id ,type:blog.type} }"
-            >
-              编辑
-            </router-link>
+            <template v-if="isshow">
+              <router-link
+              :to="{ name: 'edit', params: { id: blog.id ,type:blog.type} }"
+              >
+                编辑
+              </router-link>
+            </template>
           </el-link>
           <el-tag type="success" class="tag">{{blog.id}}</el-tag>
           <el-divider></el-divider>
@@ -24,13 +26,14 @@
 </template>
 
 <script>
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+import {oneArticle} from 'server/personalApi.js'
 
 export default {
   name: "BlogDetail",
   created() {
-    const blogId = this.$route.query.id;
+    const blogId = this.$route.params.id;
     if(blogId) {
+      this.isshow = true
       this.lookArticle();
     }
   },
@@ -42,13 +45,13 @@ export default {
         des: "",
       },
       ownBlog: true,
+      isshow:false
     };
   },
   methods: {
     async lookArticle() {
-      let res = await oneArticle({params: {id: this.$route.query.id,type:this.$route.query.type}})
+      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
       this.blog = res
-      //console.log(res);
     },
     //返回
     backFirst() {

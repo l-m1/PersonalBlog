@@ -7,7 +7,7 @@
       <div class="li">
         <router-link to="/home">Home</router-link>
         <router-link to="/host">Host</router-link>
-        <router-link to="/current">Current</router-link>
+        <router-link to="/current">Search</router-link>
         <router-link to="/about">About</router-link>
         <router-link to="/login">退出登录</router-link>
       </div>

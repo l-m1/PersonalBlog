@@ -16,7 +16,7 @@
 		</div>
 </template>
 <script>
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+import {oneArticle} from 'server/homeApi.js'
 export default {
   name: "ArticleDetail",
   data() {

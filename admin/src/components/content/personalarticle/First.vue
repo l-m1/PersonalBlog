@@ -17,7 +17,7 @@
         <el-card class="content">
           <h4>
             <router-link
-            :to="{ path: '/detail', query: { id: blog.id ,type:blog.type} }"
+            :to="{ name: 'detail', params: { id: blog.id ,type:blog.type} }"
             >
               {{ blog.title }}
             </router-link>
@@ -47,7 +47,7 @@
 <script>
 //工具类
 import Storage from 'utils/storage.js';
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+import {personalArticle,deleteArticles} from 'server/personalApi.js'
 export default {
   name: "Types",
   mounted() {

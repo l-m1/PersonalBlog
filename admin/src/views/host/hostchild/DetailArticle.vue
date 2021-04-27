@@ -1,7 +1,7 @@
 <template>
 	<div class = "article-review">
 			<div class = "review-title">
-        <a href="javascript:;" @click="backHome"><i class="el-icon-back"></i></a>
+        <a href="javascript:;" @click="backHost"><i class="el-icon-back"></i></a>
         <h2>{{ articles.title }}</h2>
         </div>
 			<div class = "review-tags">
@@ -19,9 +19,9 @@
 		</div>
 </template>
 <script>
-import {oneArticle} from 'server/homeApi.js'
+import {oneArticle} from 'server/hostApi.js'
 export default {
-  name: "ArticleDetail",
+  name: "DetailArticle",
   data() {
     return {
       articles: {
@@ -36,12 +36,12 @@ export default {
     this.getArticle();
   },
   methods: {
-    backHome() {
-      this.$router.push('/home')
+    backHost() {
+      this.$router.push('/host')
     },
     //获取对应项单个文章内容
     async getArticle() {
-      let res = await oneArticle({params: {id: this.$route.params.id,type:''}})
+      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
       //console.log(res);
       this.articles.title = res.title
       this.articles.des = res.des

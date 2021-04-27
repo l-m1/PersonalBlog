@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {personalArticle,oneArticle,updateArticles,deleteArticles} from 'server/userApi.js'
+import {oneArticle} from 'server/searchApi.js'
 export default {
   name: "ArticleDetail",
   data() {

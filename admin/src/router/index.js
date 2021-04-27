@@ -30,6 +30,7 @@ const Edit = () => import('components/content/personalarticle/Edit.vue')
 const CollectArticles = () => import('components/content/collectarticles/CollectArticles.vue')
 
 const ArticleDetail = () => import('views/home/homechild/ArticleDetail.vue')
+const DetailArticle = () => import('views/host/hostchild/DetailArticle.vue')
 
 const routes = [
   {
@@ -101,7 +102,8 @@ const routes = [
     component:First
   },
   {
-    path:'/detail',
+    path:'/detail/:id',
+    name:'detail',
     component:Detail
   },
   {
@@ -109,16 +111,23 @@ const routes = [
     component:Add
   },
   {
-    path:'/edit',
+    path:'/edit/:id',
+    name:'edit',
     component:Edit
   },
   {
-    path:'/articledetail',
+    path:'/articledetail/:id',
+    name:'articledetail',
     component:ArticleDetail
   },
   {
     path:'/about/collectArticles',
     component:CollectArticles
+  },
+  {
+    path:'/detailarticle/:id',
+    name:'detailarticle',
+    component:DetailArticle
   }
 ]
 
@@ -143,7 +152,7 @@ router.afterEach((to, from) => {
     window.document.title = to.meta.title;
     console.log(from)
   } else {
-      window.document.title = 'Blog'
+      window.document.title = 'PersonalBlog'
     }
 })
 

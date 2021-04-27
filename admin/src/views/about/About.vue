@@ -28,7 +28,7 @@
 import headerBackground from "components/content/headerBackground/index.vue";
 import personalInfo from "components/content/personalInfo/index.vue";
 /* 网络请求 */
-import {personalArticle} from 'server/userApi.js';
+import {personalArticle} from 'server/aboutApi.js';
 
 export default {
   name:'about',

@@ -54,7 +54,7 @@
 
 <script>
 import {mavonEditor} from 'mavon-editor';
-import {createArticles} from 'server/userApi.js'
+import {createArticles} from 'server/personalApi.js'
 export default {
   name: "BlogAdd",
   components: {
