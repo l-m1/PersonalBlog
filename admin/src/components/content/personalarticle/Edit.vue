@@ -2,18 +2,18 @@
   <div>
     <div class="m-content">
       <el-form
-        :model="ruleForm"
+        :model="articles"
         :rules="rules"
         ref="ruleForm"
         label-width="100px"
         class="demo-ruleForm"
       >
         <el-form-item label="标题" prop="title">
-          <el-input v-model="ruleForm.title"></el-input>
+          <el-input v-model="articles.title"></el-input>
         </el-form-item>
 
         <el-form-item label="分类" prop="type">
-          <el-select v-model="ruleForm.type">
+          <el-select v-model="articles.type">
             <el-option
                     v-for="item in types"
                     :key="item.label"
@@ -24,7 +24,7 @@
         </el-form-item>
 
         <el-form-item label="内容" prop="des">
-          <mavon-editor v-model="ruleForm.des"></mavon-editor>
+          <mavon-editor v-model="articles.des"></mavon-editor>
         </el-form-item>
 
         <el-form-item>
@@ -42,11 +42,18 @@
 
 <script>
 import {mavonEditor} from 'mavon-editor';
-import {oneArticle,updateArticles} from 'server/personalApi.js'
+import {mapActions} from 'vuex'
 export default {
   name: "BlogEdit",
   created() {
-    this.getArticle();
+    const payload = {
+      blogId:this.$route.params.id,
+      type:this.$route.params.type
+    }
+    if(payload.blogId) {
+      this.getArticle(payload);
+      this.articles = this.$store.state.ruleForm
+    }
   },
   components: {
     mavonEditor
@@ -93,12 +100,7 @@ export default {
         }, {
           label: 'code'
         }],
-      ruleForm: {
-        id: "",
-        title: "",
-        des: "",
-        type: "",
-      },
+      articles: {},
       rules: {
         title: [
           { required: true, message: "请输入标题", trigger: "blur" },
@@ -116,21 +118,21 @@ export default {
     };
   },
   methods: {
-    //获取对应项单个文章内容
-    async getArticle() {
-      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
-      this.ruleForm = res
-    },
+    ...mapActions(["getArticle","updateArticle"]),
     //编辑
     save() {
       this.saveLoading = true;
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.saveLoading = false;
-          let res = updateArticles({data:{id:this.ruleForm.id,title:this.ruleForm.title,type:this.ruleForm.type,des:this.ruleForm.des}})
-          //console.log(res);
-          if(res.data === '参数错误!') return this.$message.error('更新文章失败')
-          /* 提示信息 */
+          const info = {
+            id:this.ruleForm.id,
+            title:this.ruleForm.title,
+            type:this.ruleForm.type,
+            des:this.ruleForm.des
+          }
+          this.updateArticle(info)
+          // /* 提示信息 */
           return this.$message.success('更新文章成功')
         } else {
           console.log("error submit!!");

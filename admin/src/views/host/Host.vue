@@ -23,7 +23,7 @@
               <div class="post-info">
                 <h2 class="post-title">
                   <router-link
-                  :to="{ name: 'detailarticle', params: { id: item.id ,type:item.type} }"
+                  :to="{ name: 'detailarticle', params: { id: item.id,type:item.type} }"
                   >
                     {{ item.title }}
                   </router-link>
@@ -61,6 +61,8 @@ import headerBackground from "components/content/headerBackground/index.vue";
 //网络请求
 import {getAllArticle} from 'server/hostApi.js'
 
+import {mapActions} from 'vuex'
+
 export default {
   name:'Host',
   created() {
@@ -84,9 +86,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["getArticle"]),
     //点击列表
     itemClick() {
-      //console.log(this.subscript);
       this.getAllArticles()
     },
     /* 网络请求 */

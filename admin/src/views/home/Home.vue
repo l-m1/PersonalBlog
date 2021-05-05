@@ -5,7 +5,7 @@
     </div>
     <div class="context"> 
       <div class="context_left">
-        <div class="item-list" v-for="(item,index) in articlelist" :key="index">
+        <div class="item-list" v-for="(item,index) in this.$store.state.article" :key="index">
           <div class="item-box">
             <div class="item-box_img">
               <a>
@@ -21,12 +21,11 @@
             <div class="item-box_footer">
               <div class="item-box_detailtime">
                 <i class="iconfont icongengxinshijian"></i>
-                更新时间：{{item.updata_at.slice(0,10)}}
+                创建时间：{{item.create_at.slice(0,10)}}
               </div>
-              <div class="item-box-buttons">
-                <a class="item-box_like" @click="addToCart(item.id)">
-                  <i size="middle" class="iconfont iconshoucang" title="点击收藏"></i>
-                </a>
+              <div class="item-box_detailtime">
+                <i class="iconfont icongengxinshijian"></i>
+                更新时间：{{item.updata_at.slice(0,10)}}
               </div>
               <div class="look-down" >
                 <a>
@@ -45,7 +44,6 @@
       <div class="context_right">
         <personal-info></personal-info>
       </div>
-      <toast :message="message" :isshow="isshow"></toast>
     </div>
   </div>
 </template>
@@ -53,20 +51,17 @@
 //导入背景与右侧信息
 import headerBackground from "components/content/headerBackground/index.vue";
 import personalInfo from "components/content/personalInfo/index.vue";
-//网络请求
-import {getAllArticle,oneArticle} from 'server/homeApi.js'
-//导入收藏成功弹窗
-import Toast from 'components/common/toast/Toast.vue'
+//异步网络请求
+import {mapActions} from 'vuex'
 
 export default {
   name:'Home',
   created() {
-    this.getAllArticles()
+    this.AllArticle()
   },
   components:{
     headerBackground,
-    personalInfo,
-    Toast
+    personalInfo
   },
   data(){
     return{
@@ -74,46 +69,12 @@ export default {
       imgArticle:require('assets/image/tupian.jpg'),
       title:'Hi Blog',
       lottery:'你可以很努力 但千万别着急',
-      articlelist:{},
       date:'2020-08-10 16:39:15',
       scrollTop:0,
-      message:'',
-      isshow:false
     }
   },
   methods: {
-    //收藏
-    addToCart(id) {
-      this.getOneArticle(id)
-    },
-    /* 网络请求 */
-    //获取对应项文章列表
-    async getAllArticles() {
-      let res = await getAllArticle({params:{type:''}})
-      //console.log(res);
-      this.articlelist = res
-    },
-    //单个文章内容
-    async getOneArticle(id) {
-      let res = await oneArticle({params:{id:id,type:''}})
-      //console.log(res);
-      //1、获取报名成功将要展示的信息
-      const product = {}
-      product.title = res.title;
-      product.des = res.des;
-      product.updata_at = res.updata_at;
-      product.userinfo = res.user_info.name
-      product.id = res.id;
-      //2、将报名成功的添加到个人管理里
-      this.$store.dispatch('addCart',product)
-      //console.log(product);
-      this.isshow = true;
-      this.message = "收藏成功"
-      setTimeout(() => {
-        this.isshow = false;
-        this.message = '';
-      },1500)
-    }
+    ...mapActions(["AllArticle"])
   }
 }
 </script>
@@ -218,15 +179,6 @@ h3 {
   margin-bottom: 6px;
   color: #787878;
   font-size: 12px;
-}
-.item-box-buttons {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.item-box_like {
-  float: right;
-  margin-top: 5px;
 }
 .iconfont {
   margin-left: 2px;

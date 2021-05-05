@@ -9,8 +9,6 @@
         <p>hi，一个喜欢记录东西的陌生人，希望通过这个博客结识更多志同道合的朋友。</p>
         <h3>我创建的文章</h3>
         <a href="javascript:;" @click="lookArticles" class="look-article">查看</a>
-        <h3>我收藏的文章</h3>
-        <a href="javascript:;" @click="lookCollectArticles" class="look-article">查看</a>
         <h3>联系方式</h3>
         <p>邮箱：{{email}}</p>
         <p>扫描下方的二维码，加我为朋友吧</p>
@@ -27,8 +25,9 @@
 //引入头部导航和个人信息
 import headerBackground from "components/content/headerBackground/index.vue";
 import personalInfo from "components/content/personalInfo/index.vue";
-/* 网络请求 */
-import {personalArticle} from 'server/aboutApi.js';
+import Context from "utils/Context.js";
+
+import {mapActions} from 'vuex'
 
 export default {
   name:'about',
@@ -45,30 +44,15 @@ export default {
       imgSrc:require('assets/image/about.jpg'),
       title:'About',
       lottery:"Hi,this is Personal'blog",
-      email:this.$store.state.userinfo.name,
+      email:'',
       imgSrc_qr_code:require('assets/image/QRcode.jpg')
     }
   },
   methods:{
+    ...mapActions(["lookArticle"]),
     //个人创建的文章
     lookArticles() {
       this.$router.push('/first')
-    },
-    //收藏的文章
-    lookCollectArticles() {
-      this.$router.push('/about/collectArticles')
-    },
-    //获取创建的文章
-    async lookArticle() {
-      let res = await personalArticle({params: {}})
-      //console.log(res);
-      if(res.length) {
-        if(res[0].user_info.id != 2) {
-        this.imgSrc_qr_code = require('assets/image/QRcode1.jpg')
-        }
-      }else {
-        this.imgSrc_qr_code = require('assets/image/QRcode1.jpg')
-      }
     },
   }
 }

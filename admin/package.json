@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dll": "webpack -p --progress --config ./webpack.dll.conf.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -12,6 +13,7 @@
     "dayjs": "^1.10.4",
     "element-ui": "^2.13.2",
     "less-loader": "^6.2.0",
+    "lz-string": "^1.4.4",
     "mavon-editor": "^2.9.1",
     "moment": "^2.24.0",
     "qs": "^6.9.6",
@@ -24,6 +26,9 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-service": "^4.5.0",
-    "vue-template-compiler": "^2.6.11"
+    "add-asset-html-webpack-plugin": "^3.2.0",
+    "compression-webpack-plugin": "^7.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.4.1"
   }
 }

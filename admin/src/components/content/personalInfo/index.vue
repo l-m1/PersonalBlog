@@ -27,7 +27,7 @@
 </template>
 <script>
 /* 网络请求 */
-import {personalArticle} from 'server/personalApi.js';
+import { mapActions } from 'vuex';
 
 export default {
   created() {
@@ -39,17 +39,8 @@ export default {
     }
   },
   methods: {
-    //获取全部分类
-    async lookArticle() {
-      let res = await personalArticle({params: {}})
-      if(res.length) {
-        if(res[0].user_info.id != 2) {
-        this.imgSrcAvatar = require('assets/image/touxiang1.jpg')
-        }
-      }else {
-        this.imgSrcAvatar = require('assets/image/touxiang1.jpg')
-      }
-    },
+    ...mapActions(["lookArticle"]),
+    
   }
 }
 </script>

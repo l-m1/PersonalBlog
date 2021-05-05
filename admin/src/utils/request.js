@@ -1,12 +1,13 @@
 import axios from 'axios'
+import Context from "utils/Context.js";
 
 export function request(config) {
   //1、创建axios实例
   const instance = axios.create({
   baseURL: process.env.VUE_APP_URL === 'development' ? 'http://127.0.0.1:3000' : 'http://127.0.0.1:3001',
-  timeout: 10000,
+  timeout: 3000,
   headers: {
-    Authorization:`Bearer ${window.sessionStorage.getItem('token')}`,
+    Authorization:`Bearer ${Context.getSession("token")}`,
     Accept: 'application/json',
     Pragma: 'no-cache',
     'Cache-Control': 'no-cache',

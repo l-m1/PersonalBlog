@@ -3,19 +3,19 @@
     <el-container>
       <el-main>
         <div class="m-blog">
-          <p class="m-header-title">{{ blog.title }}</p>
+          <p class="m-header-title">{{ articles.title }}</p>
           <el-link icon="el-icon-edit" v-if="ownBlog">
             <template v-if="isshow">
               <router-link
-              :to="{ name: 'edit', params: { id: blog.id ,type:blog.type} }"
+              :to="{ name: 'edit', params: { id: this.$route.params.id ,type:this.$route.params.type} }"
               >
                 编辑
               </router-link>
             </template>
           </el-link>
-          <el-tag type="success" class="tag">{{blog.id}}</el-tag>
+          <el-tag type="success" class="tag">{{articles.id}}</el-tag>
           <el-divider></el-divider>
-          <div class="markdown-body" v-html="blog.des">
+          <div class="markdown-body" v-html="articles.des">
           </div>
           <el-button type="primary" size="mini" @click="backFirst" class="back-button"
               >返回</el-button>
@@ -26,33 +26,30 @@
 </template>
 
 <script>
-import {oneArticle} from 'server/personalApi.js'
+import {mapActions} from 'vuex'
 
 export default {
   name: "BlogDetail",
   created() {
-    const blogId = this.$route.params.id;
-    if(blogId) {
+    const payload = {
+      blogId:this.$route.params.id,
+      type:this.$route.params.type
+    }
+    if(payload) {
       this.isshow = true
-      this.lookArticle();
+      this.getArticle(payload);
+      this.articles = this.$store.state.ruleForm
     }
   },
   data() {
     return {
-      blog: {
-        id: "",
-        title: "",
-        des: "",
-      },
       ownBlog: true,
-      isshow:false
+      isshow:false,
+      articles:{}
     };
   },
   methods: {
-    async lookArticle() {
-      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
-      this.blog = res
-    },
+    ...mapActions(["getArticle"]),
     //返回
     backFirst() {
       this.$router.push('/first')

@@ -6,47 +6,41 @@
         </div>
 			<div class = "review-tags">
 				<h4>用户：</h4>
-				<span>{{ userinfo }}</span> 
+				<span>{{ articles.user_info.name }}</span> 
 			</div>
 			<div class = "review-abstract">
 				<h4>内容：</h4>
 				<span>{{ articles.des }}</span> 
 			</div>
 			<div class = "review-date">
-				<h4>发表时间：</h4>
-				<span>{{ articles.create_at }}</span> 
+				<h4>创建时间：</h4>
+				<span>{{ articles.create_at.slice(0,10) }}</span> 
 			</div>
 		</div>
 </template>
 <script>
-import {oneArticle} from 'server/hostApi.js'
+import {mapActions} from 'vuex'
 export default {
   name: "DetailArticle",
+  created() {
+    const payload = {
+      blogId:this.$route.params.id,
+      type:this.$route.params.type
+    }
+    if(payload.blogId) {
+      this.getArticle(payload);
+      this.articles = this.$store.state.ruleForm
+    }
+  },
   data() {
     return {
-      articles: {
-        title:'',
-        des:'',
-        create_at:''
-      },
-      userinfo:''
+      articles: {}
     };
   },
-  created() {
-    this.getArticle();
-  },
   methods: {
+    ...mapActions(["getArticle",]),
     backHost() {
       this.$router.push('/host')
-    },
-    //获取对应项单个文章内容
-    async getArticle() {
-      let res = await oneArticle({params: {id: this.$route.params.id,type:this.$route.params.type}})
-      //console.log(res);
-      this.articles.title = res.title
-      this.articles.des = res.des
-      this.articles.create_at = res.create_at.slice(0,10)
-      this.userinfo = res.user_info.name
     },
   }
 };

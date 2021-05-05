@@ -54,7 +54,7 @@
 
 <script>
 import {mavonEditor} from 'mavon-editor';
-import {createArticles} from 'server/personalApi.js'
+import { mapActions } from 'vuex';
 export default {
   name: "BlogAdd",
   components: {
@@ -127,16 +127,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["createArticle"]),
     //新建
     save() {
       this.saveLoading = true;
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.saveLoading = false;
-          let res = createArticles({data:{title:this.ruleForm.title,type:this.ruleForm.type,des:this.ruleForm.des}})
-          //console.log(res)
-          //if(res.data === '参数错误!') return this.$message.error('添加文章失败')
-          /* 提示信息 */
+          const info = {
+            id:this.ruleForm.id,
+            title:this.ruleForm.title,
+            type:this.ruleForm.type,
+            des:this.ruleForm.des
+          }
+          this.createArticle(info)
           return this.$message.success('添加文章成功')
         } else {
           console.log("error submit!!");
@@ -144,28 +148,6 @@ export default {
           return false;
         }
       });
-    },
-    //添加图片事件
-    imgAdd(pos,$file) {
-      let formdata = new Formdata();
-      formdata.append('image',$file);
-      upload(formdata).then(data => {
-        if(data.code == 0) {
-          this.$refs.md.$img2Url(pos,data.data.url);
-        }else {
-          this.$message({
-            message:data.msg,
-            type:'error',
-            showClose:true
-          });
-        }
-      }).catch(err => {
-        this.$message({
-          message:err,
-          type:'error',
-          showClose:true
-        });
-      })
     },
     //返回
     backFirst() {

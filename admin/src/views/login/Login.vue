@@ -6,7 +6,7 @@
         <span>登录</span>
       </div>
       <!-- 登录区域 -->
-      <el-form ref="loginform" class="loginform" :model="loginForm" :rules="loginRules">
+      <el-form ref="loginform" class="loginform" :model="loginForm">
         <!-- 用户名 -->
         <el-form-item prop="codename">
           <el-input v-model="loginForm.codename" prefix-icon="iconfont iconyouxiang"></el-input>
@@ -28,51 +28,19 @@
   </div>
 </template>
 <script>
-/* 邮箱正则 */
-import RegExp from "utils/RegExp.js";
-import Storage from "utils/storage.js";
-/* 网络请求 */
-import {login} from 'server/userApi.js';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Login',
-  data() {
-    return {
-      loginForm: {
-        codename: "2456717908@qq.com",
-        password: "m111111"
-      },
-      /* 登录规则 */
-      loginRules: {
-        codename: [
-          { required: true,message: "请输入邮箱",trigger: "blur"}
-        ],
-        password: [
-          { required: true,message: "请输入登录密码",trigger: "blur"}
-        ]
-      },
-    }
+  computed: {
+    ...mapState(["loginForm"])
   },
   methods: {
-    async submit() {
-        let res = await login({data:{name: this.loginForm.codename,psd: this.loginForm.password}})
-        //console.log(res);
-        if(res === "查无此人") {
-          this.$message({
-          message: '该邮箱没有进行注册',
-          type: 'warning'
-        })
-          return;
-        }else {
-          //将token保存
-          window.sessionStorage.setItem('token',res.token);
-          //2、将登录成功的用户id填入仓库中
-          let data = res
-          //console.log(res);
-          this.$store.commit('set_userinfo',data)
-          //跳转路由
-          this.$router.push('/home');
-        }
+    ...mapActions(["userLogin"]),
+    //登录
+    submit() {
+      const that = this
+      this.userLogin(that)
     },
     //下方按钮选择 跳转至注册 or 忘记密码
     switchModel(event) {

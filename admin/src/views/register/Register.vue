@@ -18,8 +18,8 @@
         <!-- 邮箱验证码 -->
         <el-form-item prop="vcode" class="code">
           <el-input v-model="loginForm.vcode" prefix-icon="iconfont iconyanzhengma" class="vcode"></el-input>
-          <el-button @click="send" class="vcode-button" v-show="isshow">获取邮箱验证码</el-button>
-          <el-button v-show="!isshow">{{count}}s后重新获取</el-button>
+          <el-button @click="send" class="vcode-button" v-show="flag">获取邮箱验证码</el-button>
+          <el-button v-show="!flag">{{second}}s后重新获取</el-button>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -36,22 +36,16 @@
 <script>
 /* 邮箱正则 */
 import RegExp from "utils/RegExp.js";
-/* 网络请求 */
-import {register,getVcode} from 'server/userApi.js';
+import { mapActions,mapState } from 'vuex';
 
 export default {
   name: 'Register',
   data() {
     return {
       /* 验证码倒计时 */
-      count:'',
-      isshow:true,
+      second: '',
+      flag:true,
       timer:null,
-      loginForm: {
-        codename: '',
-        password: '',
-        vcode: ''
-      },
       /* 找回密码规则 */
       loginRules: {
         codename: [
@@ -69,17 +63,25 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapState(["loginForm"])
+  },
   methods: {
-    async submit() {
-      //点击注册按钮
+    ...mapActions(["registerUser","vcodeUser"]),
+    send() {
+      //获取验证码
+      const that = this
+      this.vcodeUser(that)
+    },
+    submit() {
       //1、邮箱\密码 不符合规范
-      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
+      if(!RegExp.emailRight.test(this.$store.state.loginForm.codename) | !RegExp.regPassWord.test(this.$store.state.loginForm.password)) {
         this.$message({
           message: '请确认您输入的邮箱、密码是否正确',
           type: 'warning'
         })
         return;
-      } else if (!RegExp.regName.test(this.loginForm.vcode)){
+      } else if (!RegExp.regName.test(this.$store.state.loginForm.vcode)){
         this.$message({
           message: '请确认您输入的验证码是否正确',
           type: 'warning'
@@ -87,50 +89,8 @@ export default {
         return;
       } else {
           //符合规范的 发送注册请求
-          let res = await register({data:{name: this.loginForm.codename,psd: this.loginForm.password,code:this.loginForm.vcode}})
-          //console.log(res);
-          if(res === undefined) {
-            this.$message({
-            message: '该邮箱已被注册',
-            type: 'warning'
-          })
-            return;
-          }else {
-            this.$message({
-              message: '注册成功',
-              type: 'success'
-            })
-          }
-      }
-    },
-    async send() {
-      //获取验证码
-      const Time_COUNT = 60
-      let res = await getVcode({params:{email:this.loginForm.codename}})
-      //console.log(res);
-      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
-        this.$message({
-          message: '请确认您输入的邮箱、密码是否正确',
-          type: 'warning'
-        })
-        return;
-      } else if (!this.timer) {
-        this.count = Time_COUNT
-        this.isshow = false
-        this.$message({
-          message: '发送验证码成功',
-          type: 'success'
-        })
-        this.timer = setInterval(() => {
-          if(this.count>0 && this.count <= Time_COUNT) {
-            this.count--
-            this.isshow = false
-          }else {
-            this.isshow = true
-            clearInterval(this.timer)
-            this.timer = null
-          }
-          },1000)
+          const that = this
+          this.registerUser(that)
       }
     },
     //下方按钮选择 跳转至注册 or 忘记密码

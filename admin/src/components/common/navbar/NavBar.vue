@@ -9,13 +9,16 @@
         <router-link to="/host">Host</router-link>
         <router-link to="/current">Search</router-link>
         <router-link to="/about">About</router-link>
-        <router-link to="/login">退出登录</router-link>
+        <!-- <router-link to="/login" @click="logout">退出登录</router-link> -->
+        <a @click="logout">退出登录</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'NavBar',
   data(){
@@ -25,6 +28,13 @@ export default {
   },
   mounted(){
     window.addEventListener('scroll',this.handleScroll,true)
+  },
+  methods: {
+    logout() {
+      //退出登录，删除用户信息
+      this.$store.commit("loginout")
+      this.$router.push('/login')
+    }
   }
 }
 </script>

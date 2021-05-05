@@ -5,14 +5,14 @@
       <div class="content" v-html="detail.des"></div>
       <el-button @click="back">返回</el-button>
       <div class="date">
-        发表时间: {{detail.updata_at}}
+        发表时间: {{detail.updata_at.slice(0,10)}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {oneArticle} from 'server/searchApi.js'
+import {mapActions} from 'vuex'
 export default {
   name: "ArticleDetail",
   data() {
@@ -21,19 +21,22 @@ export default {
     };
   },
   created() {
-    this.lookArticle();
+    const payload = {
+      blogId:80,
+      type:"书籍"
+    }
+    if(payload.blogId) {
+      this.isshow = true
+      this.getArticle(payload);
+      this.detail = this.$store.state.ruleForm
+    }
   },
   methods: {
+    ...mapActions(["getArticle"]),
     //返回前一张页面
     back() {
       this.$router.push('/current')
-    },
-    async lookArticle() {
-      let res = await oneArticle({params: {id: 80,type:"书籍"}})
-      this.detail = res
-      this.detail.updata_at = res.updata_at.slice(0,10)
-      //console.log(res);
-    },
+    }
   }
 };
 </script>

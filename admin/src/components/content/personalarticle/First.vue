@@ -12,15 +12,11 @@
       >返回</el-button>
     </header>
     <!--展示博客-->
-    <div v-for="(blog, index) in blogs" :key="'blogs'+index">
+    <div v-for="(blog, index) in this.$store.state.personalarticle" :key="'blogs'+index">
       <div class="block">
         <el-card class="content">
-          <h4>
-            <router-link
-            :to="{ name: 'detail', params: { id: blog.id ,type:blog.type} }"
-            >
-              {{ blog.title }}
-            </router-link>
+          <h4 @click="itemDeatil(blog.id,blog.type)">
+            {{blog.title}}
           </h4>
           <br />
           <p>{{ blog.des }}</p>
@@ -45,26 +41,18 @@
 </template>
 
 <script>
-//工具类
-import Storage from 'utils/storage.js';
-import {personalArticle,deleteArticles} from 'server/personalApi.js'
+//仓库管理
+import {mapActions} from 'vuex'
 export default {
   name: "Types",
-  mounted() {
-    this.lookArticle()
-  },
-  data() {
-    return {
-      blogs: {},
-      user_info:{},
-    };
+  created() {
+      this.lookArticle()
   },
   methods: {
-    //获取全部分类
-    async lookArticle() {
-      let res = await personalArticle({params: {}})
-      this.blogs = res
-      //console.log(res);
+    ...mapActions(["lookArticle","deleteArticle"]),
+    //标题对应 详情文章
+    itemDeatil(id,type) {
+      this.$router.push( {name: 'detail', params: { id: id,type: type}})
     },
     //删除文章
     /* 根据id 删除文章 */
@@ -81,15 +69,6 @@ export default {
       }
       //console.log('删除成功');
       this.deleteArticle(id)
-    },
-    //删除文章
-    async deleteArticle(id) {
-      let res = await deleteArticles({data: {id: id}})
-      //console.log(res);
-      //console.log(id);
-      Storage.removeStorage(id);
-      this.lookArticle()
-      //console.log(res);
     },
     //返回about
     backFirst() {
