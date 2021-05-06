@@ -69,9 +69,10 @@ export default {
   methods: {
     ...mapActions(["registerUser","vcodeUser"]),
     send() {
-      //获取验证码
-      const that = this
-      this.vcodeUser(that)
+      //获取验证码 使用call方法
+      var fn = function() {
+        this.vcodeUser(this)
+      }.call(this)
     },
     submit() {
       //1、邮箱\密码 不符合规范

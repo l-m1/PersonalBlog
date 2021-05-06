@@ -18,6 +18,7 @@ import {getAllArticle} from 'server/homeApi.js'
 import {login,register,repassword,getVcode} from 'server/userApi.js';
 export default {
   async userLogin({commit,state},that) {
+    //console.log(that);
     let res = await login({data:{name:state.loginForm.codename,psd:state.loginForm.password}})
     //console.log(res);
       if(res == "查无此人") {

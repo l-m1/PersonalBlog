@@ -84,9 +84,13 @@ export default {
   methods: {
     ...mapActions(["forgetUser","vcodeUser"]),
     send() {
-      //获取验证码
-      const that = this
-      this.vcodeUser(that)
+      //获取验证码 使用bind方法
+      var obj = {
+        show: function() {
+          this.vcodeUser(this)
+        }.bind(this)
+      }
+      obj.show(this)  //bind
     },
     rePassword() {
       //点击注册按钮

@@ -39,8 +39,23 @@ export default {
     ...mapActions(["userLogin"]),
     //登录
     submit() {
+      //使用that存this
       const that = this
       this.userLogin(that)
+      //使用call\apply\bind
+      // var fn = function() {
+      //   this.userLogin(this)
+      // }.call(this)
+      // function fn() {
+      //   this.userLogin(this)
+      // }
+      // fn.apply(this)  //apply
+      // var obj = {
+      //   show: function() {
+      //     this.userLogin(this)
+      //   }.bind(this)
+      // }
+      // obj.show(this)  //bind
     },
     //下方按钮选择 跳转至注册 or 忘记密码
     switchModel(event) {
