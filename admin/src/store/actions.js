@@ -23,7 +23,7 @@ export default {
     //console.log(res);
       if(res == "查无此人") {
         that.$message({
-          message:'请确认您输入的邮箱、密码是否正确',
+          message:'该账号未注册',
           type:'success'
         })
       }else {

@@ -59,25 +59,25 @@ export default {
       },
     }
   },
-  created() {
-    //console.log(localStorage.getItem("time"));
-    let time = localStorage.getItem("time")
-    if(time) {
-      this.second = time;
-      this.flag = false;
-      this.timer = setInterval(() => {
-        if(this.second > 0 && this.second <= this.$store.state.TIME_COUNT) {
-          this.second--
-          localStorage.setItem('time',time)
-        }else {
-          this.flag = true
-          clearInterval(this.timer)
-          this.timer = null
-          localStorage.clear('time')
-        }
-      },1000)
-    }
-  },
+  // created() {
+  //   //console.log(localStorage.getItem("time"));
+  //   let time = localStorage.getItem("time")
+  //   if(time) {
+  //     this.second = time;
+  //     this.flag = false;
+  //     this.timer = setInterval(() => {
+  //       if(this.second > 0 && this.second <= this.$store.state.TIME_COUNT) {
+  //         this.second--
+  //         localStorage.setItem('time',time)
+  //       }else {
+  //         this.flag = true
+  //         clearInterval(this.timer)
+  //         this.timer = null
+  //         localStorage.clear('time')
+  //       }
+  //     },1000)
+  //   }
+  // },
   computed: {
     ...mapState(["loginForm"])
   },

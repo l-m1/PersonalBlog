@@ -25,7 +25,7 @@ const state = {
     user_id:'',
     user_info:'',
   },
-  TIME_COUNT:5,
+  TIME_COUNT:60,
   issuccess:false,
   article:{},
   personalarticle:{},
