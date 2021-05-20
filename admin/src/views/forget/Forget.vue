@@ -41,6 +41,11 @@ export default {
   name: 'Forget',
   data() {
     return {
+      loginForm: {
+        codename: "",
+        password: "",
+        vcode: ""
+      },
       /* 验证码倒计时 */
       second: '',
       flag:true,
@@ -59,28 +64,6 @@ export default {
       },
     }
   },
-  // created() {
-  //   //console.log(localStorage.getItem("time"));
-  //   let time = localStorage.getItem("time")
-  //   if(time) {
-  //     this.second = time;
-  //     this.flag = false;
-  //     this.timer = setInterval(() => {
-  //       if(this.second > 0 && this.second <= this.$store.state.TIME_COUNT) {
-  //         this.second--
-  //         localStorage.setItem('time',time)
-  //       }else {
-  //         this.flag = true
-  //         clearInterval(this.timer)
-  //         this.timer = null
-  //         localStorage.clear('time')
-  //       }
-  //     },1000)
-  //   }
-  // },
-  computed: {
-    ...mapState(["loginForm"])
-  },
   methods: {
     ...mapActions(["forgetUser","vcodeUser"]),
     send() {
@@ -95,13 +78,13 @@ export default {
     rePassword() {
       //点击注册按钮
       //1、邮箱\密码 不符合规范
-      if(!RegExp.emailRight.test(this.$store.state.loginForm.codename) | !RegExp.regPassWord.test(this.$store.state.loginForm.password)) {
+      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
         this.$message({
           message: '请确认您输入的邮箱、密码是否正确',
           type: 'warning'
         })
         return;
-      } else if (!RegExp.regName.test(this.$store.state.loginForm.vcode)){
+      } else if (!RegExp.regName.test(this.loginForm.vcode)){
         this.$message({
           message: '请确认您输入的验证码是否正确',
           type: 'warning'
@@ -134,7 +117,7 @@ export default {
   }
   .login_box {
     width: 450px;
-    height: 350px;
+    height: 400px;
     background-color: #fff;
     border-radius: 3px;
     /* 外部白色盒子居中 */

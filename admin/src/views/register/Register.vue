@@ -42,6 +42,11 @@ export default {
   name: 'Register',
   data() {
     return {
+      loginForm: {
+        codename: "",
+        password: "",
+        vcode: ""
+      },
       /* 验证码倒计时 */
       second: '',
       flag:true,
@@ -63,9 +68,6 @@ export default {
       },
     }
   },
-  computed: {
-    ...mapState(["loginForm"])
-  },
   methods: {
     ...mapActions(["registerUser","vcodeUser"]),
     send() {
@@ -76,13 +78,13 @@ export default {
     },
     submit() {
       //1、邮箱\密码 不符合规范
-      if(!RegExp.emailRight.test(this.$store.state.loginForm.codename) | !RegExp.regPassWord.test(this.$store.state.loginForm.password)) {
+      if(!RegExp.emailRight.test(this.loginForm.codename) | !RegExp.regPassWord.test(this.loginForm.password)) {
         this.$message({
           message: '请确认您输入的邮箱、密码是否正确',
           type: 'warning'
         })
         return;
-      } else if (!RegExp.regName.test(this.$store.state.loginForm.vcode)){
+      } else if (!RegExp.regName.test(this.loginForm.vcode)){
         this.$message({
           message: '请确认您输入的验证码是否正确',
           type: 'warning'

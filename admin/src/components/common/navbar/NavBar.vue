@@ -21,14 +21,14 @@ import { mapMutations } from 'vuex'
 
 export default {
   name: 'NavBar',
-  data(){
+  /* data(){
     return{
       scrollTop:0
     }
   },
   mounted(){
     window.addEventListener('scroll',this.handleScroll,true)
-  },
+  }, */
   methods: {
     logout() {
       //退出登录，删除用户信息
@@ -45,9 +45,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 #nav {
-  padding: 20px 400px 20px 0;
+  padding: 20px 450px 20px 0;
   display: flex;
   justify-content: space-between;
   width: 100%;

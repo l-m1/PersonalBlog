@@ -33,7 +33,13 @@ export default {
   name:'about',
   created() {
     this.email = this.$store.state.userinfo.name
-    this.lookArticle() 
+    this.lookArticle()
+    this.id = this.$store.state.userinfo.id
+    if(this.id == 2) {
+      this.imgSrc_qr_code = require('assets/image/QRcode.jpg')
+    }else {
+      this.imgSrc_qr_code = require('assets/image/QRcode1.jpg')
+    }
   },
   components:{
     headerBackground,
@@ -41,6 +47,7 @@ export default {
   },
   data(){
     return{
+      id:'',
       imgSrc:require('assets/image/about.jpg'),
       title:'About',
       lottery:"Hi,this is Personal'blog",

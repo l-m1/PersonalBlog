@@ -70,7 +70,6 @@ export default {
       title:'Hi Blog',
       lottery:'你可以很努力 但千万别着急',
       date:'2020-08-10 16:39:15',
-      scrollTop:0,
     }
   },
   methods: {
@@ -79,13 +78,6 @@ export default {
 }
 </script>
 <style scoped>
-* {
-  word-wrap: break-word;
-  font-family: 微软雅黑;
-  font-size: 13px;
-  color: #444;
-  outline: none;
-}
 .box{
   display: flex;
   flex-direction: column;

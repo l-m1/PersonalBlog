@@ -32,9 +32,17 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Login',
-  computed: {
-    ...mapState(["loginForm"])
+  data() {
+    return {
+      loginForm: {
+        codename: "2456717908@qq.com",
+        password: "m123456"
+      },
+    }
   },
+  /* computed: {
+    ...mapState(["loginForm"])
+  }, */
   methods: {
     ...mapActions(["userLogin"]),
     //登录

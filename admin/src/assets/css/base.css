@@ -22,7 +22,7 @@ body {
     "微软雅黑",Arial,sans-serif;
     -webkit-tap-highlight-color: transparent;
     background: var(--color-background);
-    width: 100vw;
+    width: 100%;
 }
 
 a {

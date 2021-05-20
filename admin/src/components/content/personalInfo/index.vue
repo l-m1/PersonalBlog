@@ -31,16 +31,23 @@ import { mapActions } from 'vuex';
 
 export default {
   created() {
-    this.lookArticle() 
+    this.lookArticle()
+    this.id = this.$store.state.userinfo.id
+    console.log(this.id);
+    if(this.id == 2) {
+      this.imgSrcAvatar = require('assets/image/touxiang.jpg')
+    }else {
+      this.imgSrcAvatar = require('assets/image/touxiang1.jpg')
+    }
   },
   data(){
     return{
-      imgSrcAvatar:require('assets/image/touxiang.jpg')
+      id:'',
+      imgSrcAvatar:''
     }
   },
   methods: {
     ...mapActions(["lookArticle"]),
-    
   }
 }
 </script>

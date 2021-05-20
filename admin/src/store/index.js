@@ -8,11 +8,6 @@ import mutations from './mutations.js'
 import actions from './actions.js'
 
 const state = {
-  loginForm: {
-    codename: "2456717908@qq.com",
-    password: "m111111",
-    vcode: "434708"
-  },
   userinfo:{},
   token:'',
   ruleForm: {

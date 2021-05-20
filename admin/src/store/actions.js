@@ -19,7 +19,7 @@ import {login,register,repassword,getVcode} from 'server/userApi.js';
 export default {
   async userLogin({commit,state},that) {
     //console.log(that);
-    let res = await login({data:{name:state.loginForm.codename,psd:state.loginForm.password}})
+    let res = await login({data:{name:that.loginForm.codename,psd:that.loginForm.password}})
     //console.log(res);
       if(res == "查无此人") {
         that.$message({
@@ -37,7 +37,7 @@ export default {
     }
   },
   async registerUser({commit,state},that) {
-    let res = await register({data:{name:state.loginForm.codename,psd:state.loginForm.password,code:state.loginForm.vcode}})
+    let res = await register({data:{name:that.loginForm.codename,psd:that.loginForm.password,code:that.loginForm.vcode}})
       //console.log(res);
       if(res == "验证码错误！") {
         that.$message({
@@ -52,7 +52,7 @@ export default {
     }
   },
   async forgetUser({commit,state},that) {
-    let res = await repassword({data:{name:state.loginForm.codename,psd:state.loginForm.password,code:state.loginForm.vcode}})
+    let res = await repassword({data:{name:that.loginForm.codename,psd:that.loginForm.password,code:that.loginForm.vcode}})
     //console.log(res);
       if(res == "验证码错误！") {
         that.$message({
@@ -72,10 +72,10 @@ export default {
     }
   },
   async vcodeUser({commit,state},that) {
-    let res = await getVcode({params:{email:state.loginForm.codename}})
-    if(!RegExp.emailRight.test(that.$store.state.loginForm.codename) | !RegExp.regPassWord.test(that.$store.state.loginForm.password)) {
+    let res = await getVcode({params:{email:that.loginForm.codename}})
+    if(!RegExp.emailRight.test(that.loginForm.codename) | !RegExp.regPassWord.test(that.loginForm.password)) {
       that.$message({
-        message: '请确认您输入的邮箱是否正确',
+        message: '请确认您输入的邮箱或密码格式是否正确',
         type: 'warning'
       })
       return;
